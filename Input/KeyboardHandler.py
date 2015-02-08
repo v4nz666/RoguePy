@@ -8,8 +8,8 @@ class KeyboardHandler(InputHandler) :
     self.initKeyInputs(inputs)
     
   def handleKeyInput(self, key):
-    for name in self.inputs:
-      cmd = self.inputs[name]
+    for name in self.keyInputs:
+      cmd = self.keyInputs[name]
       if ( cmd['key'] and cmd['key'] == key.vk ) or (
         cmd['ch'] and ( ord(cmd['ch'].lower()) == key.c or ord(cmd['ch'].upper()) == key.c ) ):
           return cmd['fn']()

@@ -3,7 +3,7 @@ class InputHandler():
     pass
   
   def initKeyInputs(self,inputs):
-    self.inputs = inputs
+    self.keyInputs = inputs
   
   def handleInput(self):
     print("Default input handler.")

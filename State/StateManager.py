@@ -11,6 +11,13 @@ class StateManager():
   
   def addState(self, gameState):
     self._states[gameState.getName()] = gameState
+    return gameState
+  def getState(self, stateName):
+    if stateName in self._states:
+      return self._states[stateName]
+    else:
+      return None
+  
   
   def getCurrentState(self):
     return self._currentState
@@ -23,6 +30,8 @@ class StateManager():
     self._nextState = self._states[stateName]
   
   def stateTransition(self):
-    # do some stuff.. callbacks and the like
-    self._currentState = self._nextState
+    if self._nextState and self._currentState != self._nextState:
+      # do some stuff.. callbacks and the like
+      self._currentState = self._nextState
+      self._nextState = None
   

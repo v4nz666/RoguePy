@@ -23,7 +23,8 @@ class UI:
     libtcod.console_set_default_background(0, libtcod.black)
     libtcod.console_init_root(w, h, b'title', fs, self._renderer)
   
-  def refresh(self):
+  def refresh(self, gameState):
+    
     libtcod.console_flush()
   
   def is_closed(self):

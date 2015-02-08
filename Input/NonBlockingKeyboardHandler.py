@@ -6,7 +6,6 @@ class NonBlockingKeyboardHandler(KeyboardHandler):
   gotInput = False
   
   def handleInput(self):
-    
     key = libtcod.console_check_for_keypress()
     if key.vk != libtcod.KEY_NONE:
       self.handleKeyInput(key)
