@@ -1,7 +1,7 @@
 '''
 StateManager
 '''
-from RoguePy.State.GameState import GameState
+import GameState
 
 class StateManager():
   def __init__(self):
@@ -17,7 +17,6 @@ class StateManager():
       return self._states[stateName]
     else:
       return None
-  
   
   def getCurrentState(self):
     return self._currentState
