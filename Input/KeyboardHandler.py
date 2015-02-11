@@ -2,11 +2,14 @@ from InputHandler import InputHandler
 
 class KeyboardHandler(InputHandler) :
   def __init__(self):
+    self.keyInputs = {}
     self.key = None
   
-  def initInputs(self, inputs):
-    self.initKeyInputs(inputs)
+  def addKeyInputs(self, inputs):
+    for i in inputs:
+      self.keyInputs[i] = inputs[i]
     
+  
   def handleKeyInput(self, key):
     for name in self.keyInputs:
       cmd = self.keyInputs[name]

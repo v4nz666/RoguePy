@@ -1,5 +1,6 @@
 from libtcod import libtcod
-from UI import *
+import UI.UI
+import UI.View
 from Core import *
 from State import *
 from Input import *
