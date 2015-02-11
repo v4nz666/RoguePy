@@ -32,12 +32,10 @@ class List(Element):
     self.scroll(step)
   
   def draw(self):
-    print "drawing list"
     self.clearConsole()
     for y in range(self.height):
       index = y + self._offset
       if index >= len(self._items):
-        print "continuing " + str(y)
         continue
       item = self._items[index]
       libtcod.console_print(self._console, 0, y, item)

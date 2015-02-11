@@ -34,9 +34,7 @@ class UI:
   
   def refresh(self, gameState):
     view = gameState.getView()
-    print view.getElements()
     for e in view.getElements():
-      print e
       view.renderElement(e)
     self._blitToRoot(view.getConsole())
     libtcod.console_flush()

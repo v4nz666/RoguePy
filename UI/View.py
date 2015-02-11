@@ -36,12 +36,8 @@ class View(object):
   
   def renderElement(self, el, drawToSelf=True):
     el.draw()
-    print "rendering " + str(vars(el))
     for e in el.getElements():
       self.renderElement(e, False)
-      print "RECURSE rendering " + str(vars(e))
-      print "blitting e.console to " + str((e.x, e.y)) + " on " + str(el.getConsole())
       libtcod.console_blit(e.getConsole(), 0, 0, e.width, e.height, el.getConsole(), e.x, e.y)
     if drawToSelf:
-      print "blitting el.console to " + str((el.x, el.y)) + " on " + str(self._console)
       libtcod.console_blit(el.getConsole(), 0, 0, el.width, el.height, self._console, el.x, el.y)
