@@ -26,9 +26,6 @@ class GameState(object):
   def getInputHandler(self):
     return self._inputHandler
   
-  def addKeyInputs(self, inputs):
-    self._inputHandler.addKeyInputs(inputs)
-  
   ######
   # The good stuff
   ######
@@ -37,5 +34,7 @@ class GameState(object):
   
   def processInput(self):
     if isinstance(self._inputHandler, Input.InputHandler):
+      inputs = self._view.getActiveInputs()
+      self._inputHandler.setInputs(inputs)
       self._inputHandler.handleInput()
   

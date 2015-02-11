@@ -5,10 +5,13 @@ class KeyboardHandler(InputHandler) :
     self.keyInputs = {}
     self.key = None
   
-  def addKeyInputs(self, inputs):
+  def _addKeyInputs(self, inputs):
     for i in inputs:
       self.keyInputs[i] = inputs[i]
-    
+  def setInputs(self, inputs):
+    self.keyInputs = {}
+    self._addKeyInputs(inputs)
+  
   
   def handleKeyInput(self, key):
     for name in self.keyInputs:

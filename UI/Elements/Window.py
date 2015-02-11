@@ -12,7 +12,7 @@ class Window(Frame):
   
   def __init__(self, x, y, w, h):
     super(Window, self).__init__(x, y, w, h)
-    self.setTitle("Window!")
+    self.setTitle("")
     
   def setTitle(self, title):
     if len(title) > self.width-2:

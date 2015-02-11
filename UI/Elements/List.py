@@ -11,6 +11,8 @@ from RoguePy.UI import Element
 class List(Element):
   
   def __init__(self, x, y, w, h, items=[]):
+    if h == 0:
+      h = len(items)
     super(List, self).__init__(x, y, w, h)
     self._items = items
     self._offset = 0
@@ -32,7 +34,6 @@ class List(Element):
     self.scroll(step)
   
   def draw(self):
-    self.clearConsole()
     for y in range(self.height):
       index = y + self._offset
       if index >= len(self._items):
@@ -43,3 +44,4 @@ class List(Element):
       libtcod.console_put_char(self._console, self.width - 1, 0, libtcod.CHAR_ARROW_N)
     if len(self._items) > self._offset + self.height:
       libtcod.console_put_char(self._console, self.width - 1, self.height - 1, libtcod.CHAR_ARROW_S)
+    
