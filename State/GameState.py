@@ -42,3 +42,7 @@ class GameState(object):
       self._inputHandler.setInputs(inputs)
       self._inputHandler.handleInput()
   
+  def beforeLoad(self):
+    pass
+  def beforeUnload(self):
+    pass

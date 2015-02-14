@@ -21,8 +21,10 @@ class StateManager():
   def getCurrentState(self):
     return self._currentState
   def setCurrentState(self, stateName):
-    self._currentState = self._states[stateName]
-  
+    newState = self._states[stateName]
+    newState.beforeLoad()
+    self._currentState = newState
+    
   def getNextState(self):
     return self._nextState
   def setNextState(self, stateName):
@@ -37,6 +39,7 @@ class StateManager():
   
   def stateTransition(self):
     if self._nextState and self._currentState != self._nextState:
-      # do some stuff.. callbacks and the like
+      self._currentState.beforeUnload()
       self._currentState = self._nextState
       self._nextState = None
+      
