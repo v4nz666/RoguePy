@@ -5,7 +5,7 @@ Documentation, License etc.
 '''
 from RoguePy.libtcod import libtcod
 from RoguePy.UI import View
-from RoguePy.UI import Element
+from RoguePy.UI.Elements import Element
 
 
 class List(Element):
@@ -39,9 +39,9 @@ class List(Element):
       if index >= len(self._items):
         continue
       item = self._items[index]
-      libtcod.console_print(self._console, 0, y, item)
+      libtcod.console_print(self.console, 0, y, item)
     if self._offset > 0:
-      libtcod.console_put_char(self._console, self.width - 1, 0, libtcod.CHAR_ARROW_N)
+      libtcod.console_put_char(self.console, self.width - 1, 0, libtcod.CHAR_ARROW_N)
     if len(self._items) > self._offset + self.height:
-      libtcod.console_put_char(self._console, self.width - 1, self.height - 1, libtcod.CHAR_ARROW_S)
+      libtcod.console_put_char(self.console, self.width - 1, self.height - 1, libtcod.CHAR_ARROW_S)
     

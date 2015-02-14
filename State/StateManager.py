@@ -28,9 +28,15 @@ class StateManager():
   def setNextState(self, stateName):
     self._nextState = self._states[stateName]
   
+  def doTick(self):
+    state = self._currentState
+    state.tick()
+    state.ui.refresh(state)
+    state.processInput()
+    self.stateTransition()
+  
   def stateTransition(self):
     if self._nextState and self._currentState != self._nextState:
       # do some stuff.. callbacks and the like
       self._currentState = self._nextState
       self._nextState = None
-  

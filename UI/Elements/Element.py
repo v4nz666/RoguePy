@@ -7,6 +7,7 @@ from RoguePy.libtcod import libtcod
 from RoguePy.UI import View
 
 class Element(View):
+  #TODO we should be calling View.__init__  :/
   def __init__(self, x, y, w, h):
     self.x = x
     self.y = y
@@ -15,7 +16,7 @@ class Element(View):
     
     self.active = True
     
-    self._console = libtcod.console_new(w, h)
+    self.console = libtcod.console_new(w, h)
     
     self.setDefaultColors()
     self.clearConsole()

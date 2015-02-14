@@ -18,6 +18,9 @@ class GameState(object):
   def getView(self):
     return self.view
   
+  '''
+  Calling this method will unset any inputs you've set.
+  '''
   def setBlocking(self, blocking):
     if blocking:
       self._inputHandler = Input.BlockingKeyboardHandler()

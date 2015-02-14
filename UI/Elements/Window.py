@@ -21,5 +21,5 @@ class Window(Frame):
   
   def draw(self):
     Frame.draw(self)
-    libtcod.console_print(self._console, 1, 0, self._title)
+    libtcod.console_print(self.console, 1, 0, self._title)
     

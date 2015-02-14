@@ -4,8 +4,7 @@ Documentation, License etc.
 @package RoguePy.UI
 '''
 from RoguePy.libtcod import libtcod
-from RoguePy.UI import View
-from RoguePy.UI import Element
+from RoguePy.UI.Elements import Element
 
 class Frame(Element):
   
@@ -51,4 +50,4 @@ class Frame(Element):
           else:
             ch = None
         if ch:
-          libtcod.console_put_char(self._console, x, y, ch)
+          libtcod.console_put_char(self.console, x, y, ch)

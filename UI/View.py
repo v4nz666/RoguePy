@@ -15,13 +15,13 @@ class View(object):
     
     self._elements = []
     self._inputs = {}
-    self._console = libtcod.console_new(self.width, self.height)
+    self.console = libtcod.console_new(self.width, self.height)
   
   def getElements(self):
     return self._elements
   
   def getConsole(self):
-    return self._console
+    return self.console
   
   def addElement(self, el):
     if el.x + el.width >= self.width:
@@ -56,14 +56,14 @@ class View(object):
   def setDefaultColors(self, fg = libtcod.white, bg = libtcod.black):
     self.fg = fg
     self.bg = bg
-    libtcod.console_set_default_foreground(self._console,fg)
-    libtcod.console_set_default_background(self._console,bg)
+    libtcod.console_set_default_foreground(self.console,fg)
+    libtcod.console_set_default_background(self.console,bg)
   
   def getDefaultColors(self):
     return (self.fg, self.bg)
   
   def clearConsole(self):
-    libtcod.console_clear(self._console)
+    libtcod.console_clear(self.console)
   
   def renderElement(self, el, drawToSelf=True):
     el.clearConsole()
@@ -77,4 +77,4 @@ class View(object):
       self.renderElement(e, False)
       libtcod.console_blit(e.getConsole(), 0, 0, e.width, e.height, el.getConsole(), e.x, e.y)
     if drawToSelf:
-      libtcod.console_blit(el.getConsole(), 0, 0, el.width, el.height, self._console, el.x, el.y)
+      libtcod.console_blit(el.getConsole(), 0, 0, el.width, el.height, self.console, el.x, el.y)
