@@ -52,9 +52,15 @@ class View(object):
     if el == self:
       return inputs
   
+  #TODO Convert fg, bg to a tuple
   def setDefaultColors(self, fg = libtcod.white, bg = libtcod.black):
+    self.fg = fg
+    self.bg = bg
     libtcod.console_set_default_foreground(self._console,fg)
     libtcod.console_set_default_background(self._console,bg)
+  
+  def getDefaultColors(self):
+    return (self.fg, self.bg)
   
   def clearConsole(self):
     libtcod.console_clear(self._console)

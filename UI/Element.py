@@ -7,7 +7,6 @@ from RoguePy.libtcod import libtcod
 from RoguePy.UI import View
 
 class Element(View):
-  
   def __init__(self, x, y, w, h):
     self.x = x
     self.y = y
@@ -29,3 +28,4 @@ class Element(View):
   
   def toggleActive(self):
     self.active = not self.active
+  

@@ -9,13 +9,14 @@ class GameState(object):
     self._name = name
     self._manager = manager
     self._inputHandler = None
-    self._view = UI.View(ui)
+    self.view = UI.View(ui)
+    self.ui = ui
   
   def getName(self):
     return self._name
   
   def getView(self):
-    return self._view
+    return self.view
   
   def setBlocking(self, blocking):
     if blocking:
@@ -34,7 +35,7 @@ class GameState(object):
   
   def processInput(self):
     if isinstance(self._inputHandler, Input.InputHandler):
-      inputs = self._view.getActiveInputs()
+      inputs = self.view.getActiveInputs()
       self._inputHandler.setInputs(inputs)
       self._inputHandler.handleInput()
   
