@@ -11,6 +11,8 @@ class Frame(Element):
   def __init__(self, x, y, w, h):
     super(Frame, self).__init__(x, y, w, h)
     
+    self._title = ""
+    
     self._chars = {
       'tl': libtcod.CHAR_NW,
       't' : libtcod.CHAR_HLINE,
@@ -22,6 +24,11 @@ class Frame(Element):
       'l' : libtcod.CHAR_VLINE
     }
   
+  def setTitle(self, title):
+    if len(title) > self.width-2:
+      title = title[:self.width-2]
+    self._title = title
+
   def draw(self):
     for y in range(self.height):
       for x in range(self.width):
@@ -51,3 +58,4 @@ class Frame(Element):
             ch = None
         if ch:
           libtcod.console_put_char(self.console, x, y, ch)
+    libtcod.console_print(self.console, 1, 0, self._title)
