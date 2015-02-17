@@ -14,7 +14,8 @@ class Element(View):
     self.width = w
     self.height = h
     
-    self.active = True
+    self.visible = True
+    self.enabled = True
     
     self.console = libtcod.console_new(w, h)
     
@@ -27,6 +28,19 @@ class Element(View):
   def draw(self):
     pass
   
-  def toggleActive(self):
-    self.active = not self.active
+  def show(self):
+    self.visible = True
+  def hide(self):
+    self.visible = False
+  def toggleVisible(self):
+    self.visible = not self.visible
   
+  ###
+  # Disabled elements will be rendered with a low-opacity black overlay
+  ###
+  def enable(self):
+    self.enabled = True
+  def disable(self):
+    self.enabled = False
+  def toggleEnabled(self):
+    self.enabled = not self.enabled
