@@ -5,7 +5,6 @@ Documentation, License etc.
 '''
 from RoguePy.libtcod import libtcod
 from RoguePy.UI.Elements import Element
-from RoguePy.Input import BlockingKeyboardHandler
 class Modal(Element):
   
   def __init__(self, x, y, w, h):

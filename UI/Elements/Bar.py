@@ -19,12 +19,19 @@ class Bar(Element):
       libtcod.CHAR_BLOCK2,
       libtcod.CHAR_BLOCK3
     ]
-    print "Bar width " + str(self.width)
+    
+    self._fgMin = libtcod.white
+    self._fgMax = libtcod.white
+    self._bgMin = libtcod.black
+    self._bgMax = libtcod.black
+    
   
   def setMin(self, min):
     self._min = min
+    return self
   def setMax(self,max):
     self._max = max
+    return self
   def getMin(self):
     return self._min
   def getMax(self):
@@ -36,27 +43,59 @@ class Bar(Element):
     elif val < self._min:
       val = self._min
     self._val = val
+    return self
   def getVal(self):
     return self._val
   
   def setChars(self,chars):
     self.chars = chars
+    return self
   def getChars(self):
     return self.chars
   
+  def calculateColors(self):
+    self._colors = []
+    length = self.width * len(self.chars)
+    for i in range(length):
+      coef = i / float(length)
+      print "Coef: " + str(coef)
+      fg = libtcod.color_lerp(self._fgMin, self._fgMax, coef)
+      bg = libtcod.color_lerp(self._bgMin, self._bgMax, coef)
+      self._colors.append((fg, bg))
+    print "Calculated colors: " + str(self._colors)
+  
+  def setMinColor(self, fg, bg=libtcod.black):
+    self._fgMin = fg
+    self._bgMin = bg
+    self.calculateColors()
+    return self
+  def setMaxColor(self, fg, bg=libtcod.black):
+    self._fgMax = fg
+    self._bgMax = bg
+    self.calculateColors()
+    return self
+  
   def draw(self):
-    max = float(self._max - self._min)
+    
+    _max = float(self._max - self._min)
     val = self._val - self._min
     
     chars = len(self.chars)
     steps = self.width * chars
-    fullSteps = int(val / max * steps)
+    
+    if steps != len(self._colors):
+      self.calculateColors()
+      
+    fullSteps = int(val / _max * steps)
     fullChars = int(fullSteps / chars)
-
+    
     lastChar = self.chars[fullSteps % chars]
+    
+    colorIndex = max(0, val-1)
+    fg = self._colors[colorIndex][0]
+    bg = self._colors[colorIndex][1]
     
     for y in range(self.height):
       for i in range(fullChars):
-        libtcod.console_put_char(self.console, i, y, self.chars[-1])
-      if lastChar > 0:
-        libtcod.console_put_char(self.console, fullChars, y, lastChar)
+        libtcod.console_put_char_ex(self.console, i, y, self.chars[-1], fg, bg)
+      libtcod.console_put_char_ex(self.console, fullChars, y, lastChar, fg, bg)

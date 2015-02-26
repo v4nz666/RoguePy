@@ -1,7 +1,7 @@
-'''
+"""
 StateManager
-'''
-import GameState
+"""
+
 
 class StateManager():
   def __init__(self):
@@ -42,4 +42,3 @@ class StateManager():
       self._currentState.beforeUnload()
       self._currentState = self._nextState
       self._nextState = None
-      

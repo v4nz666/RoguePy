@@ -28,6 +28,7 @@ class Frame(Element):
     if len(title) > self.width-2:
       title = title[:self.width-2]
     self._title = title
+    return self
 
   def draw(self):
     for y in range(self.height):
