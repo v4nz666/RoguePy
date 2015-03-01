@@ -13,7 +13,12 @@ class Label(Element):
     self._label = label
   
   def setLabel(self, label):
-    self.label = label
+    self._label = label
+    if self.width != len(self._label):
+      self.width = len(self._label)
+      # TODO This is not subject to constraint by the parent element, and can therefore spill outside its parent.
+      # TODO investigate / fix segfault when calling libtcod.console_delete(self.console)
+      self.console = libtcod.console_new(len(self._label), 1)
   def getLabel(self):
     return self._label
   

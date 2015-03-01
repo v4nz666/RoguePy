@@ -11,3 +11,4 @@ from Bar import Bar
 from Slider import Slider
 from Animation import Animation
 from Flash import Flash
+from Map import Map

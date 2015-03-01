@@ -25,7 +25,8 @@ class Element(View):
     self._elements = []
     self._inputs = {}
 
-    self.opacity = 1
+    self.fgOpacity = 1
+    self.bgOpacity = 1
     self.parent = None
 
     self.bgFlag = libtcod.BKGND_SET

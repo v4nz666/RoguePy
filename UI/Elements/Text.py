@@ -8,7 +8,7 @@ from RoguePy.UI.Elements import Element
 
 class Text(Element):
   
-  def __init__(self, x, y, w, h, text=""):
+  def __init__(self, x, y, w, h, text=b""):
     super(Text, self).__init__(x, y, w, h)
     self._text = text
   
