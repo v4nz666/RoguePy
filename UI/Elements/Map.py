@@ -51,6 +51,4 @@ class Map(Element):
     for y in range(self.height):
       for x in range(self.width):
         c = self._map.getCell(x + self._offsetX, y + self._offsetY)
-
-        layer1 = c.material
-        libtcod.console_put_char_ex(self.console, x, y, layer1.char, layer1.fg, layer1.bg)
+        libtcod.console_put_char_ex(self.console, x, y, c.terrain.char, c.terrain.fg, c.terrain.bg)

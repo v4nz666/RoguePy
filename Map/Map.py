@@ -18,4 +18,4 @@ class Map(object):
     return self.cells[x + y * self.width]
 
   def getTerrain(self, x, y):
-    return self.getCell(x, y).material.desc
+    return self.getCell(x, y).terrain.desc

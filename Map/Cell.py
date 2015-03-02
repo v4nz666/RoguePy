@@ -1,24 +1,21 @@
-import materials
+import terrains
 
 
 class Cell(object):
-  def __init__(self, material = materials.EMPTY):
+  def __init__(self, terrain = terrains.EMPTY):
     """
     Cell class. Represents one space on the Map
 
     :return: self
     """
-
-    self.material = material
-    print self.material
+    self.terrain = terrain
 
 
-  def setMaterial(self, material):
-    print "Setting material " + str(material)
-    self.material = material
+  def setTerrain(self, terrain):
+    self.terrain = terrain
 
   def transparent(self):
-    return self.material.see
+    return self.terrain.see
 
   def passable(self):
-    return self.material.walk
+    return self.terrain.walk
