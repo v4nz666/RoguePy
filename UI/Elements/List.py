@@ -16,7 +16,11 @@ class List(Element):
     super(List, self).__init__(x, y, w, h)
     self._items = items
     self._offset = 0
-  
+
+  def setItems(self, items):
+    print "setting items:" + str(items)
+    self._items = items
+
   def addItem(self, item):
     self._items.append(item)
   

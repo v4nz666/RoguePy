@@ -12,10 +12,12 @@ class Map(object):
     self._map = libtcod.map_new(w, h)
     self.cells = [Cell() for coord in range(self.width * self.height)]
 
-
   def getCell(self, x, y):
-    print "GETTING CELL :" + str((x, y))
     return self.cells[x + y * self.width]
 
   def getTerrain(self, x, y):
-    return self.getCell(x, y).terrain.desc
+    return self.getCell(x, y).terrain
+
+  def addEntity(self, entity, x, y):
+    print "Adding entity: " + str(entity) + " at " + str((x, y))
+    self.getCell(x, y).addEntity(entity)

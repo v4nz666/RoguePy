@@ -52,3 +52,8 @@ class Map(Element):
       for x in range(self.width):
         c = self._map.getCell(x + self._offsetX, y + self._offsetY)
         libtcod.console_put_char_ex(self.console, x, y, c.terrain.char, c.terrain.fg, c.terrain.bg)
+
+        for i in range(len(c.entities)):
+          e = c.entities[i]
+          libtcod.console_put_char(self.console, x, y, e.char)
+          libtcod.console_set_char_foreground(self.console, x, y, e.color)
