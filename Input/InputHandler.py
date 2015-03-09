@@ -3,5 +3,4 @@ class InputHandler():
     pass
   
   def handleInput(self):
-    print("Default input handler.")
     return

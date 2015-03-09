@@ -58,12 +58,10 @@ class Bar(Element):
     length = self.width * len(self.chars)
     for i in range(length):
       coef = i / float(length)
-      print "Coef: " + str(coef)
       fg = libtcod.color_lerp(self._fgMin, self._fgMax, coef)
       bg = libtcod.color_lerp(self._bgMin, self._bgMax, coef)
       self._colors.append((fg, bg))
-    print "Calculated colors: " + str(self._colors)
-  
+
   def setMinColor(self, fg, bg=libtcod.black):
     self._fgMin = fg
     self._bgMin = bg

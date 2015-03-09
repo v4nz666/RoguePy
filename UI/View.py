@@ -139,7 +139,6 @@ class View(object):
   def setDefaultBackground(self, bg, cascade=False):
     libtcod.console_set_default_background(self.console,bg)
     if cascade:
-      print "cascading"
       for e in self._elements:
         e.setDefaultBackground(bg, True)
   #TODO Convert fg, bg to a tuple
