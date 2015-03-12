@@ -55,22 +55,38 @@ class Menu(List):
   
   def _moveSelect(self, step):
     newIndex = self.selected + step
+    menuLength = len(self._items)
+    print "Entered, new index", newIndex
+    wrapped = False
+
     if self._wrap:
       if newIndex < 0:
-        newIndex = len(self.menuItems ) + step
-      elif newIndex >= len(self.menuItems):
+        print "Went past top of list, wrapping to bottom, length", menuLength
+        newIndex = menuLength - 1
+        self._offset = menuLength - self.height
+        wrapped = True
+        print "New offset", self._offset
+        print "new index", newIndex
+      elif newIndex >= menuLength:
+        print "Went past bottom, wrapping to top of list, length", menuLength
         newIndex = 0
+        self._offset = 0
+        wrapped = True
+        print "New offset", self._offset
+        print "new index", newIndex
+
     else:
       if newIndex < 0:
         newIndex = 0
-      elif newIndex >= len(self.menuItems):
-        newIndex = len(self.menuItems) + step
+      elif newIndex >= menuLength:
+        newIndex = menuLength - 1
+
     self.selected = newIndex
-    
-    if self.selected + self._offset > self.height - 1:
-      self.scrollDown()
-    elif self.selected < self._offset:
-      self.scrollUp()
+    if not wrapped:
+      if self.selected >= self._offset  + self.height:
+        self.scrollDown()
+      elif self.selected < self._offset:
+        self.scrollUp()
     
   
   def draw(self):
@@ -78,6 +94,9 @@ class Menu(List):
       return
     super(Menu, self).draw()
     y = self.selected - self._offset
+
+    print "len, selected, _offset, y", (len(self._items),self.selected, self._offset, y)
+
     for x in range(len(self.menuItems[self.selected].getLabel())):
       selectedFg = libtcod.console_get_char_background(self.console, x, y)
       selectedBg = libtcod.console_get_char_foreground(self.console, x, y)
