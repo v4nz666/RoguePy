@@ -9,28 +9,35 @@ from RoguePy.UI.Elements import MenuItem
 
 class Menu(List):
   
-  def __init__(self, x, y, w, h, menuItems={}):
-    
+  def __init__(self, x, y, w, h, menuItems=[]):
+    super(Menu, self).__init__(x, y, w, h)
+
     self.selected = 0
-    
+    self.setWrap(True)
+
     self.menuItems = []
-    itemStrings = []
+    self.itemStrings = []
+    self.setItems(menuItems)
+
+
+  def setItems(self, items):
+    self.itemStrings = []
     _y = 0
-    for i in menuItems:
+    for i in items:
       label = i.keys()[0]
       fn = i[label]
-      
+
       #if self.align == CENTER:
-      _x = (w - len(label)) / 2
+      _x = (self.width - len(label)) / 2
       #elif self.align == LEFT:
       #x = 0
       self.menuItems.append(MenuItem(_x, _y, label, fn))
-      itemStrings.append(label)
-    
-    self.setWrap(True)
-    
-    super(Menu, self).__init__(x, y, w, h, itemStrings)
-  
+      self.itemStrings.append(label)
+    super(Menu, self).setItems(self.itemStrings)
+
+
+
+
   def setWrap(self, wrap):
     self._wrap = wrap
   def getWrap(self):
@@ -67,6 +74,8 @@ class Menu(List):
     
   
   def draw(self):
+    if not len(self._items):
+      return
     super(Menu, self).draw()
     y = self.selected - self._offset
     for x in range(len(self.menuItems[self.selected].getLabel())):
