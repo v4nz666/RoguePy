@@ -21,6 +21,7 @@ class Menu(List):
 
 
   def setItems(self, items):
+    self.menuItems = []
     self.itemStrings = []
     _y = 0
     for i in items:
@@ -34,9 +35,6 @@ class Menu(List):
       self.menuItems.append(MenuItem(_x, _y, label, fn))
       self.itemStrings.append(label)
     super(Menu, self).setItems(self.itemStrings)
-
-
-
 
   def setWrap(self, wrap):
     self._wrap = wrap
@@ -80,7 +78,7 @@ class Menu(List):
         self.scrollDown()
       elif self.selected < self._offset:
         self.scrollUp()
-    
+
   def draw(self):
     if not len(self._items):
       return
