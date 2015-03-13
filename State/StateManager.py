@@ -29,7 +29,7 @@ class StateManager():
     return self._nextState
   def setNextState(self, stateName):
     self._nextState = self._states[stateName]
-  
+
   def doTick(self):
     state = self._currentState
     state.tick()
