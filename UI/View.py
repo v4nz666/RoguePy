@@ -22,7 +22,13 @@ class View(object):
     self.inputsEnabled = True
     self.fg = libtcod.white
     self.bg = libtcod.black
-  
+
+  def clear(self):
+    for e in self._elements:
+      e.clear()
+    self._elements = []
+    self._inputs = {}
+
   def getElements(self):
     return self._elements
   
