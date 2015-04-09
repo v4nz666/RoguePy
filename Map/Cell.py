@@ -23,7 +23,6 @@ class Cell(object):
 
   def addEntity(self, entity):
     self.entities.append(entity)
-    print "Adding entity: " + str(entity)
   def removeEntity(self, entity):
     try:
       self.entities.remove(entity)

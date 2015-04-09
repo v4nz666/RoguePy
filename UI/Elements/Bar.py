@@ -24,7 +24,7 @@ class Bar(Element):
     self._fgMax = libtcod.white
     self._bgMin = libtcod.black
     self._bgMax = libtcod.black
-    
+
   
   def setMin(self, min):
     self._min = min
@@ -58,12 +58,10 @@ class Bar(Element):
     length = self.width * len(self.chars)
     for i in range(length):
       coef = i / float(length)
-      print "Coef: " + str(coef)
       fg = libtcod.color_lerp(self._fgMin, self._fgMax, coef)
       bg = libtcod.color_lerp(self._bgMin, self._bgMax, coef)
       self._colors.append((fg, bg))
-    print "Calculated colors: " + str(self._colors)
-  
+
   def setMinColor(self, fg, bg=libtcod.black):
     self._fgMin = fg
     self._bgMin = bg
@@ -91,7 +89,8 @@ class Bar(Element):
     
     lastChar = self.chars[fullSteps % chars]
     
-    colorIndex = max(0, val-1)
+    colorIndex = max(0, min(len(self._colors) - 1, val-1))
+
     fg = self._colors[colorIndex][0]
     bg = self._colors[colorIndex][1]
     

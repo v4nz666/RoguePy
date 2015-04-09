@@ -18,7 +18,6 @@ class List(Element):
     self._offset = 0
 
   def setItems(self, items):
-    print "setting items:" + str(items)
     self._items = items
 
   def addItem(self, item):

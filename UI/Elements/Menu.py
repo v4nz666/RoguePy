@@ -9,28 +9,33 @@ from RoguePy.UI.Elements import MenuItem
 
 class Menu(List):
   
-  def __init__(self, x, y, w, h, menuItems={}):
-    
+  def __init__(self, x, y, w, h, menuItems=[]):
+    super(Menu, self).__init__(x, y, w, h)
+
     self.selected = 0
-    
+    self.setWrap(True)
+
     self.menuItems = []
-    itemStrings = []
+    self.itemStrings = []
+    self.setItems(menuItems)
+
+
+  def setItems(self, items):
+    self.menuItems = []
+    self.itemStrings = []
     _y = 0
-    for i in menuItems:
+    for i in items:
       label = i.keys()[0]
       fn = i[label]
-      
+
       #if self.align == CENTER:
-      _x = (w - len(label)) / 2
+      _x = (self.width - len(label)) / 2
       #elif self.align == LEFT:
       #x = 0
       self.menuItems.append(MenuItem(_x, _y, label, fn))
-      itemStrings.append(label)
-    
-    self.setWrap(True)
-    
-    super(Menu, self).__init__(x, y, w, h, itemStrings)
-  
+      self.itemStrings.append(label)
+    super(Menu, self).setItems(self.itemStrings)
+
   def setWrap(self, wrap):
     self._wrap = wrap
   def getWrap(self):
@@ -48,27 +53,38 @@ class Menu(List):
   
   def _moveSelect(self, step):
     newIndex = self.selected + step
+    menuLength = len(self._items)
+    wrapped = False
+
     if self._wrap:
       if newIndex < 0:
-        newIndex = len(self.menuItems ) + step
-      elif newIndex >= len(self.menuItems):
+        newIndex = menuLength - 1
+        self._offset = menuLength - self.height
+        wrapped = True
+      elif newIndex >= menuLength:
         newIndex = 0
+        self._offset = 0
+        wrapped = True
+
     else:
       if newIndex < 0:
         newIndex = 0
-      elif newIndex >= len(self.menuItems):
-        newIndex = len(self.menuItems) + step
+      elif newIndex >= menuLength:
+        newIndex = menuLength - 1
+
     self.selected = newIndex
-    
-    if self.selected + self._offset > self.height - 1:
-      self.scrollDown()
-    elif self.selected < self._offset:
-      self.scrollUp()
-    
-  
+    if not wrapped:
+      if self.selected >= self._offset  + self.height:
+        self.scrollDown()
+      elif self.selected < self._offset:
+        self.scrollUp()
+
   def draw(self):
+    if not len(self._items):
+      return
     super(Menu, self).draw()
     y = self.selected - self._offset
+
     for x in range(len(self.menuItems[self.selected].getLabel())):
       selectedFg = libtcod.console_get_char_background(self.console, x, y)
       selectedBg = libtcod.console_get_char_foreground(self.console, x, y)

@@ -19,5 +19,4 @@ class Map(object):
     return self.getCell(x, y).terrain
 
   def addEntity(self, entity, x, y):
-    print "Adding entity: " + str(entity) + " at " + str((x, y))
     self.getCell(x, y).addEntity(entity)

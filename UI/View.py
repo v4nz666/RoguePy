@@ -22,7 +22,13 @@ class View(object):
     self.inputsEnabled = True
     self.fg = libtcod.white
     self.bg = libtcod.black
-  
+
+  def clear(self):
+    for e in self._elements:
+      e.clear()
+    self._elements = []
+    self._inputs = {}
+
   def getElements(self):
     return self._elements
   
@@ -139,7 +145,6 @@ class View(object):
   def setDefaultBackground(self, bg, cascade=False):
     libtcod.console_set_default_background(self.console,bg)
     if cascade:
-      print "cascading"
       for e in self._elements:
         e.setDefaultBackground(bg, True)
   #TODO Convert fg, bg to a tuple
@@ -172,6 +177,8 @@ class View(object):
 
   @staticmethod
   def renderOverlay(el):
+    if not (el.width and el.height):
+      return
     con = libtcod.console_new(el.width, el.height)
     libtcod.console_set_default_background(con, libtcod.black)
     libtcod.console_blit(con, 0, 0, el.width, el.height, el.console, 0, 0, 0.0, 0.4)
