@@ -69,5 +69,4 @@ class Slider(Element):
     libtcod.console_put_char(self.console, self.width - 1, 0, self._right)
 
     sliderPosition = min(self.sliderWidth, self._val / self.valPerChar)
-    print "min max val pos perChar", self._min, self._max, self._val, sliderPosition, self.valPerChar
     libtcod.console_put_char(self.console, sliderPosition, 0, self._bar)
