@@ -19,9 +19,10 @@ class Label(Element):
       # TODO This is not subject to constraint by the parent element, and can therefore spill outside its parent.
       # TODO investigate / fix segfault when calling libtcod.console_delete(self.console)
       self.console = libtcod.console_new(len(self._label), 1)
+      self.setDirty()
   def getLabel(self):
     return self._label
   
   def draw(self):
     libtcod.console_print(self.console, 0, 0, self._label)
-      
+    self.setDirty(False)

@@ -11,7 +11,6 @@ class MenuItem(Label):
   def __init__(self, x, y, label, fn):
     super(MenuItem, self).__init__(x, y, label)
     self.fn = fn
-    
-    
+
   def draw(self):
     super(MenuItem, self).draw()

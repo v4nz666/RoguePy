@@ -19,23 +19,27 @@ class List(Element):
 
   def setItems(self, items):
     self._items = items
+    self.setDirty()
 
   def addItem(self, item):
     self._items.append(item)
-  
+    self.setDirty()
+
   def removeItem(self, item):
     if item in self._items:
       self._items.remove(item)
-  
+    self.setDirty()
+
   def scroll(self,step):
     newOffset = self._offset + step
     if len(self._items) - newOffset >= self.height and newOffset >= 0:
       self._offset = newOffset
+    self.setDirty()
   def scrollUp(self,step=1):
     self.scroll(-step)
   def scrollDown(self, step=1):
     self.scroll(step)
-  
+
   def draw(self):
     for y in range(self.height):
       index = y + self._offset
@@ -47,4 +51,4 @@ class List(Element):
       libtcod.console_put_char(self.console, self.width - 1, 0, libtcod.CHAR_ARROW_N)
     if len(self._items) > self._offset + self.height:
       libtcod.console_put_char(self.console, self.width - 1, self.height - 1, libtcod.CHAR_ARROW_S)
-    
+    self.setDirty(False)

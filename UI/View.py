@@ -12,7 +12,9 @@ class View(object):
     self.y = 0
     self.width = ui.getWidth()
     self.height = ui.getHeight()
-    
+
+    self.setDirty(True)
+
     self._elements = []
     self._inputs = {}
     
@@ -40,13 +42,14 @@ class View(object):
       el.width = self.width - el.x
     if el.y + el.height>= self.height:
       el.height = self.height - el.y
-  
+
     self._elements.append(el)
     el.setParent(self)
     return el
   def removeElement(self, el):
     if el in self._elements:
       self._elements.remove(el)
+    self.setDirty()
   
   def setInputs(self, inputs):
     """
@@ -100,7 +103,7 @@ class View(object):
   
   def disableAll(self, disableSelf=True):
     """
-    Disable all elements. Disabled elements are rendered with a low-opacity black overlay.
+    Disable all elements. Disabled elements are rendered with a low-opacity overlay of their bg color.
 
     :param disableSelf: Also disable the Inputs bound directly to the View? Defaults to True
     """
@@ -131,24 +134,38 @@ class View(object):
       if ( el == self and self.inputsEnabled ) or el != self:
         newInputs = el.getInputs()
         inputs.update(newInputs)
-        
+
       for e in el.getElements():
         self.getActiveInputs(inputs, e)
     if el == self:
       return inputs
-  
+
+  def setDirty(self, dirty=True):
+    self._dirty = dirty
+
+  def isDirty(self):
+    return self._dirty
+
+
   def setDefaultForeground(self, fg, cascade=False):
     self.fg = fg
     libtcod.console_set_default_foreground(self.console,fg)
+
     if cascade:
       for e in self._elements:
         e.setDefaultForeground(fg, True)
+
+    self.setDirty()
+
   def setDefaultBackground(self, bg, cascade=False):
     self.bg = bg
     libtcod.console_set_default_background(self.console,bg)
     if cascade:
       for e in self._elements:
         e.setDefaultBackground(bg, True)
+
+    self.setDirty()
+
   #TODO Convert fg, bg to a tuple
   def setDefaultColors(self, fg = libtcod.white, bg = libtcod.black, cascade=False):
     self.setDefaultForeground(fg, cascade)
@@ -160,18 +177,20 @@ class View(object):
   
   def clearConsole(self):
     libtcod.console_clear(self.console)
+    self.setDirty()
     return self
   
   def renderElements(self):
     for e in self._elements:
-      e.clearConsole()
       if not e.visible:
         continue
       try:
         e.updateAnimationFrame()
       except AttributeError:
         pass
-      e.draw()
+      if e.isDirty():
+        e.clearConsole()
+        e.draw()
       e.renderElements()
       if not e.enabled:
         self.renderOverlay(e)
@@ -182,7 +201,9 @@ class View(object):
     if not (el.width and el.height):
       return
     con = libtcod.console_new(el.width, el.height)
-    libtcod.console_set_default_background(con, libtcod.black)
+    libtcod.console_set_default_background(con, el.bg)
+    libtcod.console_clear(con)
     libtcod.console_blit(con, 0, 0, el.width, el.height, el.console, 0, 0, 0.0, 0.4)
     libtcod.console_delete(con)
-    
+
+    el.setDirty()
