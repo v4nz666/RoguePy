@@ -56,12 +56,15 @@ elif sys.platform.find('haiku') != -1:
     _lib = ctypes.cdll[path + '/libtcod.so']
     HAIKU = True
 else:
+    oldpath = os.getcwd()
+    os.chdir(path)
     try:
-        _lib = ctypes.cdll[path + '/libtcod-mingw.dll']
+        _lib = ctypes.cdll['libtcod-mingw.dll']
         MINGW=True
     except WindowsError:
-        _lib = ctypes.cdll[path + '/libtcod-VS.dll']
+        _lib = ctypes.cdll['libtcod-VS.dll']
         MSVC=True
+    os.chdir(oldpath)
     # On Windows, ctypes doesn't work well with function returning structs,
     # so we have to user the _wrapper functions instead
     _lib.TCOD_color_multiply = _lib.TCOD_color_multiply_wrapper
