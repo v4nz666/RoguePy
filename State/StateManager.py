@@ -41,4 +41,5 @@ class StateManager():
     if self._nextState and self._currentState != self._nextState:
       self._currentState.beforeUnload()
       self._currentState = self._nextState
+      self._currentState.beforeLoad()
       self._nextState = None

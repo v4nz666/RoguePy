@@ -35,6 +35,7 @@ class Map(Element):
       self._offsetY = y - self.halfH
     else:
       self._offsetY = self._map.height - self.height
+    self.setDirty()
 
 
   def onScreen(self, x, y):
@@ -57,3 +58,4 @@ class Map(Element):
           e = c.entities[i]
           libtcod.console_put_char(self.console, x, y, e.char)
           libtcod.console_set_char_foreground(self.console, x, y, e.color)
+    self.setDirty(False)

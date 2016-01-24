@@ -10,6 +10,7 @@ class Bar(Element):
   
   def __init__(self, x, y, w, h=1):
     super(Bar, self).__init__(x, y, w, h)
+
     self.setMin(0)
     self.setMax(100)
     self.setVal(100)
@@ -25,7 +26,6 @@ class Bar(Element):
     self._bgMin = libtcod.black
     self._bgMax = libtcod.black
 
-  
   def setMin(self, min):
     self._min = min
     return self
@@ -43,6 +43,9 @@ class Bar(Element):
     elif val < self._min:
       val = self._min
     self._val = val
+
+    self.setDirty()
+
     return self
   def getVal(self):
     return self._val
@@ -98,3 +101,5 @@ class Bar(Element):
       for i in range(fullChars):
         libtcod.console_put_char_ex(self.console, i, y, self.chars[-1], fg, bg)
       libtcod.console_put_char_ex(self.console, fullChars, y, lastChar, fg, bg)
+
+    self.setDirty(False)

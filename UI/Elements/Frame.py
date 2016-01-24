@@ -28,6 +28,7 @@ class Frame(Element):
     if len(title) > self.width-2:
       title = title[:self.width-2]
     self._title = title
+    self.setDirty()
     return self
 
   def draw(self):
@@ -60,3 +61,5 @@ class Frame(Element):
         if ch:
           libtcod.console_put_char(self.console, x, y, ch)
     libtcod.console_print(self.console, 1, 0, self._title)
+
+    self.setDirty(False)

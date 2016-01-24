@@ -17,6 +17,7 @@ class Modal(Element):
     view.disableAll()
     self.visible = True
     self.enabled = True
+    self.setDirty()
   
   def hide(self, view):
     self.visible = False

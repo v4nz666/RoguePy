@@ -40,6 +40,7 @@ class Slider(Element):
     if val != self._val:
       self._val = val
       self.onChange()
+      self.setDirty()
     
   def getVal(self):
     return self._val
@@ -70,3 +71,5 @@ class Slider(Element):
 
     sliderPosition = min(self.sliderWidth, self._val / self.valPerChar)
     libtcod.console_put_char(self.console, sliderPosition, 0, self._bar)
+
+    self.setDirty(False)

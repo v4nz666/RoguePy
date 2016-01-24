@@ -19,7 +19,6 @@ class Menu(List):
     self.itemStrings = []
     self.setItems(menuItems)
 
-
   def setItems(self, items):
     self.menuItems = []
     self.itemStrings = []
@@ -78,6 +77,8 @@ class Menu(List):
         self.scrollDown()
       elif self.selected < self._offset:
         self.scrollUp()
+
+    self.setDirty()
 
   def draw(self):
     if not len(self._items):

@@ -17,6 +17,8 @@ class Element(View):
     self.visible = True
     self.enabled = True
 
+    self.setDirty(True)
+
     self.console = libtcod.console_new(w, h)
 
     self.setDefaultColors()
@@ -36,26 +38,33 @@ class Element(View):
 
   def setParent(self, parent):
     self.parent = parent
-  
+
   def draw(self):
     pass
-  
+
+  def toggleVisible(self):
+    self.visible = not self.visible
+    if self.visible:
+      self.setDirty()
+
+    return self
   def show(self):
     self.visible = True
+    self.setDirty()
     return self
   def hide(self):
     self.visible = False
     return self
-  def toggleVisible(self):
-    self.visible = not self.visible
-    return self
-  
+
   ###
-  # Disabled elements will be rendered with a low-opacity black overlay
-  ###
-  def enable(self):
-    self.enabled = True
-  def disable(self):
-    self.enabled = False
   def toggleEnabled(self):
     self.enabled = not self.enabled
+    self.setDirty()
+
+  def enable(self):
+    self.enabled = True
+    self.setDirty()
+
+  def disable(self):
+    self.enabled = False
+    self.setDirty()
