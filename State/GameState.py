@@ -3,21 +3,39 @@ GameState
 '''
 from RoguePy import Input
 from RoguePy import UI
+from TickHandler import TickHandler
+
 
 class GameState(object):
   def __init__(self, name, manager, ui):
     self._name = name
     self._manager = manager
     self._inputHandler = None
+
+    self.tickHandlers = {}
+    self.handlerQueue = []
+
     self.view = UI.View(ui)
     self.ui = ui
-  
+
   def getName(self):
     return self._name
   
   def getView(self):
     return self.view
-  
+
+  def addHandler(self, name, interval, handler):
+    if not name in self.tickHandlers:
+      self.tickHandlers[name] = TickHandler(interval, handler)
+  def removeHandler(self, name):
+    self.handlerQueue.append(name)
+
+  def purgeHandlers(self):
+    for name in self.handlerQueue:
+      if name in self.tickHandlers:
+        del self.tickHandlers[name]
+    self.handlerQueue = []
+
   '''
   Calling this method will unset any inputs you've set.
   '''
@@ -33,9 +51,6 @@ class GameState(object):
   ######
   # The good stuff
   ######
-  def tick(self):
-    pass
-  
   def processInput(self):
     if isinstance(self._inputHandler, Input.InputHandler):
       inputs = self.view.getActiveInputs()

@@ -19,29 +19,26 @@ class SplashScreen(GameState):
     self.setBlocking(False)
     self._setupView()
     self._setupInputs()
-  
-  
-  def tick(self):
-    if not self._animationComplete:
-      self.renderAnimationFrame()
-  
+
+    self.addHandler('animationHandler', 6, self.renderAnimationFrame)
+
   def renderAnimationFrame(self):
     self._ticks = self._ticks + 1
     if self._frame >= len(self._subTitleText):
       self.endAnimation()
       return
     
-    if not self._ticks % 6:
-      self._frame = self._frame + 1
-      _str = self._subTitleText[:self._frame]
-      self.elements['subTitleText'].setText(_str)
-  
+    self._frame = self._frame + 1
+    _str = self._subTitleText[:self._frame]
+    self.elements['subTitleText'].setText(_str)
+
   def endAnimation(self):
     self.setBlocking(True)
     self.elements['pressKey'].show()
     self._animationComplete = True
     time.sleep(0)
     self.clearViewInputs()
+    self.removeHandler('animationHandler')
 
   def skipAnimation(self):
     self.elements['subTitleText'].setText(self._subTitleText)

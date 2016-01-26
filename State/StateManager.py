@@ -8,6 +8,8 @@ class StateManager():
     self._states = {}
     self._currentState = None
     self._nextState = None
+
+    self.tick = 0
   
   def addState(self, gameState):
     self._states[gameState.getName()] = gameState
@@ -21,6 +23,7 @@ class StateManager():
   def getCurrentState(self):
     return self._currentState
   def setCurrentState(self, stateName):
+    self.tick = 0
     newState = self._states[stateName]
     newState.beforeLoad()
     self._currentState = newState
@@ -32,14 +35,25 @@ class StateManager():
 
   def doTick(self):
     state = self._currentState
-    state.tick()
+
+    handlers = state.tickHandlers
+    for h in handlers:
+      handler = state.tickHandlers[h]
+      if not self.tick % handler.interval:
+        handler.run()
+    state.purgeHandlers()
+
+    self.tick += 1
+
     state.ui.refresh(state)
     state.processInput()
+
     self.stateTransition()
-  
+
   def stateTransition(self):
     if self._nextState and self._currentState != self._nextState:
       self._currentState.beforeUnload()
       self._currentState = self._nextState
       self._currentState.beforeLoad()
       self._nextState = None
+      self.tick = 0
