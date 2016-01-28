@@ -18,13 +18,13 @@ class UI:
     self._width = None
     self._height = None
   
-  def init(self, w, h, fs):
+  def init(self, w, h, fs, title='RoguePy Game'):
     self._width = w
     self._height = h
     libtcod.console_set_custom_font(self._font, libtcod.FONT_TYPE_GREYSCALE | libtcod.FONT_LAYOUT_TCOD)
     libtcod.console_set_default_foreground(0, libtcod.white)
     libtcod.console_set_default_background(0, libtcod.black)
-    libtcod.console_init_root(w, h, b'title', fs, self._renderer)
+    libtcod.console_init_root(w, h, title, fs, self._renderer)
   
   def getWidth(self):
     return self._width
