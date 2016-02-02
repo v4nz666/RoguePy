@@ -7,9 +7,10 @@ from RoguePy.UI import Elements
 
 class Demo1(GameState):
   
-  def __init__(self,name, manager, ui):
-    super(self.__class__, self).__init__(name, manager, ui)
-    
+  def __init__(self,name, manager):
+    super(self.__class__, self).__init__(name, manager)
+
+  def beforeLoad(self):
     self._setupView()
     self._setupInputs()
   

@@ -13,13 +13,14 @@ class SplashScreen(GameState):
   _titleText = "RoguePy"
   _subTitleText = "The easy rogue-like library"
   
-  def __init__(self, name, manager, ui):
-    super(SplashScreen, self).__init__(name, manager, ui)
+  def __init__(self, name, manager):
+    super(SplashScreen, self).__init__(name, manager)
     
+    self.addHandler('animationHandler', 6, self.renderAnimationFrame)
+
+  def beforeLoad(self):
     self._setupView()
     self._setupInputs()
-
-    self.addHandler('animationHandler', 6, self.renderAnimationFrame)
 
   def renderAnimationFrame(self):
     self._ticks = self._ticks + 1

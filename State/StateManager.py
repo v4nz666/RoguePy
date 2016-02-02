@@ -9,17 +9,29 @@ class StateManager():
     self._currentState = None
     self._nextState = None
 
+    self.ui = None
+
     self.tick = 0
   
   def addState(self, gameState):
     self._states[gameState.getName()] = gameState
+    if self.ui:
+      gameState.initView(self.ui)
     return gameState
   def getState(self, stateName):
     if stateName in self._states:
       return self._states[stateName]
     else:
       return None
-  
+
+  @property
+  def ui(self):
+    return self.__ui
+
+  @ui.setter
+  def ui(self, ui):
+    self.__ui = ui
+
   def getCurrentState(self):
     return self._currentState
   def setCurrentState(self, stateName):
@@ -45,7 +57,9 @@ class StateManager():
 
     self.tick += 1
 
-    state.ui.refresh(state)
+    if self.ui:
+      self.ui.refresh(state.getView())
+
     state.processInput()
 
     self.stateTransition()

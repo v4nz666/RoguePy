@@ -7,13 +7,19 @@ from RoguePy.UI import Elements
 
 class Demo4(GameState):
   
-  def __init__(self,name, manager, ui):
-    super(self.__class__, self).__init__(name, manager, ui)
-
+  def __init__(self,name, manager):
+    super(self.__class__, self).__init__(name, manager)
     self._initPlayer()
+
+  def beforeLoad(self):
     self._setupView()
     self._setupInputs()
-  
+
+  def beforeUnload(self):
+    self._initPlayer()
+    self.playerStatFrame.enable()
+    self.updateStats()
+
   ###
   # Initialisation
   ###
@@ -99,10 +105,6 @@ class Demo4(GameState):
   def quit(self):
     self._manager.setNextState('quit')
 
-  def beforeUnload(self):
-    self._initPlayer()
-    self.playerStatFrame.enable()
-    self.updateStats()
 
 class Fighter:
   def __init__(self):

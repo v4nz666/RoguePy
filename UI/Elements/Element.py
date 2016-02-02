@@ -22,7 +22,7 @@ class Element(View):
     self.console = libtcod.console_new(w, h)
 
     self.setDefaultColors()
-    self.clearConsole()
+    self.clear()
 
     self._elements = []
     self._inputs = {}

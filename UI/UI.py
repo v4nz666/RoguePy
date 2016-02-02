@@ -32,9 +32,9 @@ class UI:
   def getHeight(self):
     return self._height
   
-  def refresh(self, gameState):
-    view = gameState.getView()
-    view.clearConsole()
+  def refresh(self, view):
+    # TODO doesnt' seem this is necessary?! I don't think we want to be doing it, if not...
+    #view.clear()
     view.renderElements()
     self._blitToRoot(view.getConsole())
     libtcod.console_flush()

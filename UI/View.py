@@ -25,9 +25,12 @@ class View(object):
     self.fg = libtcod.white
     self.bg = libtcod.black
 
-  def clear(self):
+  def clearAll(self):
+
+    self.clear()
+
     for e in self._elements:
-      e.clear()
+      e.clearAll()
     self._elements = []
     self._inputs = {}
 
@@ -142,6 +145,7 @@ class View(object):
 
   def setDirty(self, dirty=True):
     self._dirty = dirty
+    return self
 
   def isDirty(self):
     return self._dirty
@@ -174,27 +178,31 @@ class View(object):
   
   def getDefaultColors(self):
     return self.fg, self.bg
-  
-  def clearConsole(self):
+
+  ###
+  # Drawing methods
+  ###
+
+  def clear(self):
     libtcod.console_clear(self.console)
     self.setDirty()
     return self
-  
+
+  def putCh(self, x, y, ch, fg, bg):
+    libtcod.console_put_char_ex(self.console, x, y, ch, fg, bg)
+    self.setDirty()
+    
   def renderElements(self):
     for e in self._elements:
       if not e.visible:
         continue
-      try:
-        e.updateAnimationFrame()
-      except AttributeError:
-        pass
       if e.isDirty():
-        e.clearConsole()
+        e.clear()
         e.draw()
       e.renderElements()
       if not e.enabled:
         self.renderOverlay(e)
-      libtcod.console_blit(e.getConsole(), 0, 0, e.width, e.height, self.console, e.x, e.y, e.fgOpacity, e.bgOpacity)
+      libtcod.console_blit(e.console, 0, 0, e.width, e.height, self.console, e.x, e.y, e.fgOpacity, e.bgOpacity)
 
   @staticmethod
   def renderOverlay(el):
