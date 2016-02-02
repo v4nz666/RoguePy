@@ -10,13 +10,22 @@ class GameState(object):
   def __init__(self, name, manager, ui):
     self._name = name
     self._manager = manager
-    self._inputHandler = None
+    self.inputHandler = Input.KeyboardHandler()
 
     self.tickHandlers = {}
     self.handlerQueue = []
 
     self.view = UI.View(ui)
     self.ui = ui
+
+  @property
+  def inputHandler(self):
+    return self.__inputHandler
+
+  @inputHandler.setter
+  def inputHandler(self, h):
+    if isinstance(h, Input.InputHandler):
+      self.__inputHandler = h
 
   def getName(self):
     return self._name
@@ -36,26 +45,13 @@ class GameState(object):
         del self.tickHandlers[name]
     self.handlerQueue = []
 
-  '''
-  Calling this method will unset any inputs you've set.
-  '''
-  def setBlocking(self, blocking):
-    if blocking:
-      self._inputHandler = Input.BlockingKeyboardHandler()
-    else:
-      self._inputHandler = Input.NonBlockingKeyboardHandler()
-  
-  def getInputHandler(self):
-    return self._inputHandler
-  
   ######
   # The good stuff
   ######
   def processInput(self):
-    if isinstance(self._inputHandler, Input.InputHandler):
-      inputs = self.view.getActiveInputs()
-      self._inputHandler.setInputs(inputs)
-      self._inputHandler.handleInput()
+    inputs = self.view.getActiveInputs()
+    self.inputHandler.setInputs(inputs)
+    self.inputHandler.handleInput()
   
   def beforeLoad(self):
     pass

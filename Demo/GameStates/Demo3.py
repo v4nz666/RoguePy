@@ -10,7 +10,6 @@ class Demo3(GameState):
   def __init__(self,name, manager, ui):
     super(self.__class__, self).__init__(name, manager, ui)
    
-    self.setBlocking(True)
     self._setupView()
     self._setupInputs()
     
@@ -216,10 +215,10 @@ class Demo3(GameState):
     elif index == 2:
       self.frame.setDefaultBackground(libtcod.red, True)
     elif index == 3:
-      self.frame.setDefaultBackground(libtcod.green, True)
-    elif index == 4:
       self.frame.setDefaultBackground(libtcod.blue, True)
-  
+    elif index == 4:
+      self.frame.setDefaultBackground(libtcod.green, True)
+
   def changeForeground(self):
     r = self.sliderR.getVal()
     g = self.sliderG.getVal()

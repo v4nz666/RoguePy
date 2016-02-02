@@ -17,8 +17,6 @@ class Demo5(GameState):
 
     super(self.__class__, self).__init__(name, manager, ui)
 
-    self.setBlocking(True)
-
     grid = [
       "               XXXXXXXXX ",
       "  XXXXXX   XXXXX-------X ",

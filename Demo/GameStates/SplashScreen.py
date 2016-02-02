@@ -16,7 +16,6 @@ class SplashScreen(GameState):
   def __init__(self, name, manager, ui):
     super(SplashScreen, self).__init__(name, manager, ui)
     
-    self.setBlocking(False)
     self._setupView()
     self._setupInputs()
 
@@ -33,7 +32,6 @@ class SplashScreen(GameState):
     self.elements['subTitleText'].setText(_str)
 
   def endAnimation(self):
-    self.setBlocking(True)
     self.elements['pressKey'].show()
     self._animationComplete = True
     time.sleep(0)
