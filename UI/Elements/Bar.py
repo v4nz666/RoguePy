@@ -43,10 +43,9 @@ class Bar(Element):
     elif val < self._min:
       val = self._min
     self._val = val
-
     self.setDirty()
-
     return self
+
   def getVal(self):
     return self._val
   
@@ -80,7 +79,10 @@ class Bar(Element):
     
     _max = float(self._max - self._min)
     val = self._val - self._min
-    
+
+    if val <= 0:
+      return
+
     chars = len(self.chars)
     steps = self.width * chars
     

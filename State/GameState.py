@@ -3,44 +3,67 @@ GameState
 '''
 from RoguePy import Input
 from RoguePy import UI
+from TickHandler import TickHandler
+
 
 class GameState(object):
-  def __init__(self, name, manager, ui):
-    self._name = name
-    self._manager = manager
-    self._inputHandler = None
+  def __init__(self, name, manager):
+    self.name = name
+    self.manager = manager
+    self.inputHandler = Input.KeyboardHandler()
+
+    self.tickHandlers = {}
+    self.handlerQueue = []
+    self.view = None
+
+  def initView(self, ui):
     self.view = UI.View(ui)
-    self.ui = ui
   
-  def getName(self):
-    return self._name
+  @property
+  def name(self):
+    return self.__name
+  @name.setter
+  def name(self,name):
+    self.__name = name
   
-  def getView(self):
-    return self.view
+  @property
+  def manager(self):
+    return self.__manager
+  @manager.setter
+  def manager(self,manager):
+    self.__manager = manager
   
-  '''
-  Calling this method will unset any inputs you've set.
-  '''
-  def setBlocking(self, blocking):
-    if blocking:
-      self._inputHandler = Input.BlockingKeyboardHandler()
-    else:
-      self._inputHandler = Input.NonBlockingKeyboardHandler()
-  
-  def getInputHandler(self):
-    return self._inputHandler
-  
-  ######
-  # The good stuff
-  ######
-  def tick(self):
-    pass
-  
+  @property
+  def inputHandler(self):
+    return self.__inputHandler
+  @inputHandler.setter
+  def inputHandler(self, h):
+    if isinstance(h, Input.InputHandler):
+      self.__inputHandler = h
+
+  @property
+  def view(self):
+    return self.__view
+  @view.setter
+  def view(self,view):
+    self.__view = view
+
+  def addHandler(self, name, interval, handler):
+    if not name in self.tickHandlers:
+      self.tickHandlers[name] = TickHandler(interval, handler)
+  def removeHandler(self, name):
+    self.handlerQueue.append(name)
+
+  def purgeHandlers(self):
+    for name in self.handlerQueue:
+      if name in self.tickHandlers:
+        del self.tickHandlers[name]
+    self.handlerQueue = []
+
   def processInput(self):
-    if isinstance(self._inputHandler, Input.InputHandler):
-      inputs = self.view.getActiveInputs()
-      self._inputHandler.setInputs(inputs)
-      self._inputHandler.handleInput()
+    inputs = self.view.getActiveInputs()
+    self.inputHandler.setInputs(inputs)
+    self.inputHandler.handleInput()
   
   def beforeLoad(self):
     pass

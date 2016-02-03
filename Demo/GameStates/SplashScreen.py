@@ -13,35 +13,31 @@ class SplashScreen(GameState):
   _titleText = "RoguePy"
   _subTitleText = "The easy rogue-like library"
   
-  def __init__(self, name, manager, ui):
-    super(SplashScreen, self).__init__(name, manager, ui)
+  def __init__(self, name, manager):
+    super(SplashScreen, self).__init__(name, manager)
     
-    self.setBlocking(False)
+    self.addHandler('animationHandler', 6, self.renderAnimationFrame)
+
+  def beforeLoad(self):
     self._setupView()
     self._setupInputs()
-  
-  
-  def tick(self):
-    if not self._animationComplete:
-      self.renderAnimationFrame()
-  
+
   def renderAnimationFrame(self):
     self._ticks = self._ticks + 1
     if self._frame >= len(self._subTitleText):
       self.endAnimation()
       return
     
-    if not self._ticks % 6:
-      self._frame = self._frame + 1
-      _str = self._subTitleText[:self._frame]
-      self.elements['subTitleText'].setText(_str)
-  
+    self._frame = self._frame + 1
+    _str = self._subTitleText[:self._frame]
+    self.elements['subTitleText'].setText(_str)
+
   def endAnimation(self):
-    self.setBlocking(True)
     self.elements['pressKey'].show()
     self._animationComplete = True
     time.sleep(0)
     self.clearViewInputs()
+    self.removeHandler('animationHandler')
 
   def skipAnimation(self):
     self.elements['subTitleText'].setText(self._subTitleText)
@@ -98,6 +94,6 @@ class SplashScreen(GameState):
 
 
   def next(self):
-    self._manager.setNextState('demo1')
+    self.manager.setNextState('demo1')
   def quit(self):
-    self._manager.setNextState('quit')
+    self.manager.setNextState('quit')

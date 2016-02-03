@@ -7,10 +7,10 @@ from RoguePy.UI import Elements
 
 class Demo3(GameState):
  
-  def __init__(self,name, manager, ui):
-    super(self.__class__, self).__init__(name, manager, ui)
+  def __init__(self,name, manager):
+    super(self.__class__, self).__init__(name, manager)
    
-    self.setBlocking(True)
+  def beforeLoad(self):
     self._setupView()
     self._setupInputs()
     
@@ -216,10 +216,10 @@ class Demo3(GameState):
     elif index == 2:
       self.frame.setDefaultBackground(libtcod.red, True)
     elif index == 3:
-      self.frame.setDefaultBackground(libtcod.green, True)
-    elif index == 4:
       self.frame.setDefaultBackground(libtcod.blue, True)
-  
+    elif index == 4:
+      self.frame.setDefaultBackground(libtcod.green, True)
+
   def changeForeground(self):
     r = self.sliderR.getVal()
     g = self.sliderG.getVal()
@@ -249,6 +249,6 @@ class Demo3(GameState):
     print "Called back from Modal onClose"
 
   def next(self):
-    self._manager.setNextState('demo4')
+    self.manager.setNextState('demo4')
   def quit(self):
-    self._manager.setNextState('quit')
+    self.manager.setNextState('quit')

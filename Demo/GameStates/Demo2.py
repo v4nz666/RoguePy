@@ -7,10 +7,9 @@ from RoguePy.UI import Elements
 
 class Demo2(GameState):
  
-  def __init__(self,name, manager, ui):
-    super(self.__class__, self).__init__(name, manager, ui)
-   
-    self.setBlocking(True)
+  def __init__(self,name, manager):
+    super(self.__class__, self).__init__(name, manager)
+  def beforeLoad(self):
     self._setupView()
     self._setupInputs()
  
@@ -108,6 +107,6 @@ class Demo2(GameState):
     self.invFrame.toggleVisible()
     
   def next(self):
-    self._manager.setNextState('demo3')
+    self.manager.setNextState('demo3')
   def quit(self):
-    self._manager.setNextState('quit')
+    self.manager.setNextState('quit')
