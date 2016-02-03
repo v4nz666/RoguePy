@@ -2,8 +2,10 @@
 DemoThree GameState
 '''
 import RoguePy.State.GameState as GameState
-from RoguePy.libtcod import libtcod
+from RoguePy.Input import Keys
+from RoguePy.UI import Colors
 from RoguePy.UI import Elements
+from RoguePy.libtcod import Color
 
 class Demo3(GameState):
  
@@ -64,18 +66,18 @@ class Demo3(GameState):
     self.sliderFrame.setTitle("Fg Color")
     
     self.labelR = self.sliderFrame.addElement(Elements.Label(1,1,"R"))
-    rVal = libtcod.console_get_default_foreground(self.frame.console).r
+    rVal = self.frame.getDefaultForeGround().r
     self.sliderR = self.sliderFrame.addElement(Elements.Slider(3, 1, 8, 0, 255, rVal, 8))
     self.sliderR.onChange = self.changeForeground
     
     self.labelG = self.sliderFrame.addElement(Elements.Label(1,2,"G"))
-    gVal = libtcod.console_get_default_foreground(self.frame.console).g
+    gVal = self.frame.getDefaultForeGround().g
     self.sliderG = self.sliderFrame.addElement(Elements.Slider(3, 2, 8, 0, 255, gVal, 8))
     self.sliderG.onChange = self.changeForeground
     self.sliderG.disable()
     
     self.labelB = self.sliderFrame.addElement(Elements.Label(1,3,"B"))
-    bVal = libtcod.console_get_default_foreground(self.frame.console).b
+    bVal = self.frame.getDefaultForeGround().b
     self.sliderB = self.sliderFrame.addElement(Elements.Slider(3, 3, 8, 0, 255, bVal, 8))
     self.sliderB.onChange = self.changeForeground
     self.sliderB.disable()
@@ -105,17 +107,17 @@ class Demo3(GameState):
   def _setupInputs(self):
     self.frame.setInputs({
       'quit': {
-        'key': libtcod.KEY_ESCAPE,
+        'key': Keys.Escape,
         'ch' : None,
         'fn' : self.quit
       },
       'step': {
-        'key': libtcod.KEY_SPACE,
+        'key': Keys.Space,
         'ch' : None,
         'fn' : self.next
       },
       'showModal': {
-        'key': libtcod.KEY_TAB,
+        'key': Keys.Tab,
         'ch' : None,
         'fn' : self.toggleModal
       }
@@ -123,7 +125,7 @@ class Demo3(GameState):
     
     self.modal.setInputs({
       'showModal': {
-        'key': libtcod.KEY_TAB,
+        'key': Keys.Tab,
         'ch' : None,
         'fn' : self.toggleModal
       }
@@ -131,17 +133,17 @@ class Demo3(GameState):
     
     self.menu.setInputs({
       'menuScrollUp': {
-        'key' : libtcod.KEY_UP,
+        'key' : Keys.Up,
         'ch'  : None,
         'fn'  : self.menu.selectUp
       },
       'menuScrollDn': {
-        'key' : libtcod.KEY_DOWN,
+        'key' : Keys.Down,
         'ch'  : None,
         'fn'  : self.menu.selectDown
       },
       'menuSelect': {
-        'key' : libtcod.KEY_ENTER,
+        'key' : Keys.Enter,
         'ch'  : None,
         'fn'  : self.menu.selectFn
       }
@@ -167,12 +169,12 @@ class Demo3(GameState):
     
     self.sliderR.setInputs({
       'sliderR-left': {
-        'key' : libtcod.KEY_LEFT,
+        'key' : Keys.Left,
         'ch'  : None,
         'fn'  : self.sliderR.left
       },
       'sliderR-right': {
-        'key' : libtcod.KEY_RIGHT,
+        'key' : Keys.Right,
         'ch'  : None,
         'fn'  : self.sliderR.right
       }
@@ -180,12 +182,12 @@ class Demo3(GameState):
     
     self.sliderG.setInputs({
       'sliderG-left': {
-        'key' : libtcod.KEY_LEFT,
+        'key' : Keys.Left,
         'ch'  : None,
         'fn'  : self.sliderG.left
       },
       'sliderG-right': {
-        'key' : libtcod.KEY_RIGHT,
+        'key' : Keys.Right,
         'ch'  : None,
         'fn'  : self.sliderG.right
       }
@@ -193,12 +195,12 @@ class Demo3(GameState):
     
     self.sliderB.setInputs({
       'sliderB-left': {
-        'key' : libtcod.KEY_LEFT,
+        'key' : Keys.Left,
         'ch'  : None,
         'fn'  : self.sliderB.left
       },
       'sliderB-right': {
-        'key' : libtcod.KEY_RIGHT,
+        'key' : Keys.Right,
         'ch'  : None,
         'fn'  : self.sliderB.right
       }
@@ -210,15 +212,15 @@ class Demo3(GameState):
 
   def menuOnSelect(self, index):
     if index == 0:
-      self.frame.setDefaultBackground(libtcod.black, True)
+      self.frame.setDefaultBackground(Colors.black, True)
     elif index == 1:
-      self.frame.setDefaultBackground(libtcod.white, True)
+      self.frame.setDefaultBackground(Colors.white, True)
     elif index == 2:
-      self.frame.setDefaultBackground(libtcod.red, True)
+      self.frame.setDefaultBackground(Colors.red, True)
     elif index == 3:
-      self.frame.setDefaultBackground(libtcod.blue, True)
+      self.frame.setDefaultBackground(Colors.blue, True)
     elif index == 4:
-      self.frame.setDefaultBackground(libtcod.green, True)
+      self.frame.setDefaultBackground(Colors.green, True)
 
   def changeForeground(self):
     r = self.sliderR.getVal()

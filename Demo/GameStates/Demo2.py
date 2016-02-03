@@ -2,7 +2,7 @@
 DemoTwo GameState
 """
 import RoguePy.State.GameState as GameState
-from RoguePy.libtcod import libtcod
+from RoguePy.Input import Keys
 from RoguePy.UI import Elements
 
 class Demo2(GameState):
@@ -70,17 +70,17 @@ class Demo2(GameState):
   def _setupInputs(self):
     self.view.setInputs({
       'quit': {
-        'key': libtcod.KEY_ESCAPE,
+        'key': Keys.Escape,
         'ch' : None,
         'fn' : self.quit
       },
       'step': {
-        'key': libtcod.KEY_SPACE,
+        'key': Keys.Space,
         'ch' : None,
         'fn' : self.next
       },
       'toggleInv': {
-        'key': libtcod.KEY_TAB,
+        'key': Keys.Tab,
         'ch' : None,
         'fn' : self.toggleInv
       }
@@ -88,12 +88,12 @@ class Demo2(GameState):
     
     self.list.setInputs({
       'scrollUp': {
-        'key': libtcod.KEY_UP,
+        'key': Keys.Up,
         'ch' : None,
         'fn' : self.list.scrollUp
       },
       'scrollDn': {
-        'key': libtcod.KEY_DOWN,
+        'key': Keys.Down,
         'ch' : None,
         'fn' : self.list.scrollDown
       },

@@ -2,7 +2,8 @@
 DemoFour GameState
 """
 import RoguePy.State.GameState as GameState
-from RoguePy.libtcod import libtcod
+from RoguePy.Input import Keys
+from RoguePy.UI import Colors
 from RoguePy.UI import Elements
 
 class Demo4(GameState):
@@ -57,20 +58,20 @@ class Demo4(GameState):
     self.playerHpBar = self.playerStatFrame.addElement(Elements.Bar(8, 1, 5))\
       .setMax(self.player.maxHp)\
       .setVal(self.player.hp)\
-      .setMinColor(libtcod.dark_red)\
-      .setMaxColor(libtcod.dark_green)
+      .setMinColor(Colors.dark_red)\
+      .setMaxColor(Colors.dark_green)
     self.playerStatsDict = self.playerStatFrame.addElement(Elements.Dict(1, 2, 12, 5))\
       .setItems(self.player.stats)
     
   def _setupInputs(self):
     self.view.setInputs({
       'quit': {
-        'key':libtcod.KEY_ESCAPE,
+        'key': Keys.Escape,
         'ch': None,
         'fn': self.quit
       },
       'step': {
-        'key':libtcod.KEY_SPACE,
+        'key':Keys.Space,
         'ch': None,
         'fn': self.next
       }

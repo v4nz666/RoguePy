@@ -2,8 +2,9 @@
 DemoOne GameState
 '''
 import RoguePy.State.GameState as GameState
-from RoguePy.libtcod import libtcod
+from RoguePy.Input import Keys
 from RoguePy.UI import Elements
+from RoguePy.libtcod import libtcod
 
 class Demo1(GameState):
   
@@ -46,12 +47,12 @@ class Demo1(GameState):
   def _setupInputs(self):
     self.view.setInputs({
       'quit': {
-        'key':libtcod.KEY_ESCAPE,
+        'key': Keys.Escape,
         'ch': None,
         'fn': self.quit
       },
       'step': {
-        'key':libtcod.KEY_SPACE,
+        'key': Keys.Space,
         'ch': None,
         'fn': self.next
       }

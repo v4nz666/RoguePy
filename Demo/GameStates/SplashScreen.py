@@ -3,7 +3,7 @@ SplashScreen GameState
 '''
 import time
 from RoguePy.State import GameState
-from RoguePy.libtcod import libtcod
+from RoguePy.Input import Keys
 from RoguePy.UI import Elements
 
 class SplashScreen(GameState):
@@ -81,7 +81,7 @@ class SplashScreen(GameState):
 
     self.elements['pressKey'].setInputs({
       'quit': {
-        'key':libtcod.KEY_ESCAPE,
+        'key':Keys.Escape,
         'ch': None,
         'fn': self.quit
       },

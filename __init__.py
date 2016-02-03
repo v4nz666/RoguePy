@@ -8,3 +8,6 @@ import Map.Map as Map
 import Game
 def setFps(fps):
   libtcod.sys_set_fps(fps)
+
+def getFps():
+  return libtcod.sys_get_fps()

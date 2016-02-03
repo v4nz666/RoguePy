@@ -206,6 +206,9 @@ class View(object):
         self.renderOverlay(e)
       libtcod.console_blit(e.console, 0, 0, e.width, e.height, self.console, e.x, e.y, e.fgOpacity, e.bgOpacity)
 
+  def getDefaultForeGround(self):
+    return libtcod.console_get_default_foreground(self.console)
+
   @staticmethod
   def renderOverlay(el):
     if not (el.width and el.height):
