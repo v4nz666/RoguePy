@@ -101,9 +101,9 @@ class Demo4(GameState):
     self.updateStats()
 
   def next(self):
-    self._manager.setNextState('demo5')
+    self.manager.setNextState('demo5')
   def quit(self):
-    self._manager.setNextState('quit')
+    self.manager.setNextState('quit')
 
 
 class Fighter:

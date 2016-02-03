@@ -8,10 +8,10 @@ from RoguePy.UI.Elements import Element
 
 class Frame(Element):
   
-  def __init__(self, x, y, w, h):
+  def __init__(self, x, y, w, h, title=""):
     super(Frame, self).__init__(x, y, w, h)
     
-    self._title = ""
+    self.setTitle(title);
     
     self._chars = {
       'tl': libtcod.CHAR_NW,

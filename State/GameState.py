@@ -8,8 +8,8 @@ from TickHandler import TickHandler
 
 class GameState(object):
   def __init__(self, name, manager):
-    self._name = name
-    self._manager = manager
+    self.name = name
+    self.manager = manager
     self.inputHandler = Input.KeyboardHandler()
 
     self.tickHandlers = {}
@@ -18,22 +18,39 @@ class GameState(object):
 
   def initView(self, ui):
     self.view = UI.View(ui)
-
+  
+  @property
+  def name(self):
+    return self.__name
+  @name.setter
+  def name(self,name):
+    self.__name = name
+  
+  @property
+  def manager(self):
+    return self.__manager
+  @manager.setter
+  def manager(self,manager):
+    self.__manager = manager
+  
   @property
   def inputHandler(self):
     return self.__inputHandler
-
   @inputHandler.setter
   def inputHandler(self, h):
     if isinstance(h, Input.InputHandler):
       self.__inputHandler = h
 
-  def getName(self):
-    return self._name
-  
-  def getView(self):
-    return self.view
+  @property
+  def view(self):
+    return self.__view
+  @view.setter
+  def view(self,view):
+    self.__view = view
 
+
+
+  
   def addHandler(self, name, interval, handler):
     if not name in self.tickHandlers:
       self.tickHandlers[name] = TickHandler(interval, handler)

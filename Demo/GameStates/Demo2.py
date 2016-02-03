@@ -107,6 +107,6 @@ class Demo2(GameState):
     self.invFrame.toggleVisible()
     
   def next(self):
-    self._manager.setNextState('demo3')
+    self.manager.setNextState('demo3')
   def quit(self):
-    self._manager.setNextState('quit')
+    self.manager.setNextState('quit')

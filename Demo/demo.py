@@ -11,8 +11,7 @@ RoguePy.setFps(60)
 ui = RoguePy.UI.UI()
 ui.init(48, 32, False)
 
-stateManager = RoguePy.State.StateManager()
-stateManager.ui = ui
+stateManager = RoguePy.State.StateManager(ui)
 
 s_splash = GameStates.SplashScreen('splash', stateManager)
 s_demo1 = GameStates.Demo1('demo1', stateManager)

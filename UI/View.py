@@ -8,6 +8,8 @@ from RoguePy.libtcod import libtcod
 class View(object):
 
   def __init__(self, ui):
+    self.ui = ui
+
     self.x = 0
     self.y = 0
     self.width = ui.getWidth()

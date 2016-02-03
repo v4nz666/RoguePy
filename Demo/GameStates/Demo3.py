@@ -249,6 +249,6 @@ class Demo3(GameState):
     print "Called back from Modal onClose"
 
   def next(self):
-    self._manager.setNextState('demo4')
+    self.manager.setNextState('demo4')
   def quit(self):
-    self._manager.setNextState('quit')
+    self.manager.setNextState('quit')

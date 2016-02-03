@@ -192,6 +192,6 @@ class Demo5(GameState):
       self.selectedX += 1
 
   def next(self):
-    self._manager.setNextState('demo1')
+    self.manager.setNextState('demo1')
   def quit(self):
-    self._manager.setNextState('quit')
+    self.manager.setNextState('quit')
