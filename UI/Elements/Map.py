@@ -49,10 +49,13 @@ class Map(Element):
     return (x - self._offsetX, y - self._offsetY)
   
   def draw(self):
-    for y in range(self.height):
-      for x in range(self.width):
-        c = self._map.getCell(x + self._offsetX, y + self._offsetY)
-        libtcod.console_put_char_ex(self.console, x, y, c.terrain.char, c.terrain.fg, c.terrain.bg)
+    for sy in range(self.height):
+      for sx in range(self.width):
+        x = sx + self._offsetX
+        y = sy + self._offsetY
+        if (x >= 0 and x < self._map.width and y >= 0 and y < self._map.height):
+          c = self._map.getCell(x, y)
+          libtcod.console_put_char_ex(self.console, x, y, c.terrain.char, c.terrain.fg, c.terrain.bg)
 
         for i in range(len(c.entities)):
           e = c.entities[i]

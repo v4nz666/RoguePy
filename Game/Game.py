@@ -1,6 +1,6 @@
 
-import UI
-import State
+from .. import UI
+from .. import State
 
 class Game:
     def __init__(self, title, width, height, fullscreen):
