@@ -1,14 +1,15 @@
 """
 DemoFive GameState
 """
-
+import RoguePy
 from RoguePy.Map.Map import Map
 from RoguePy.Map.Terrain import Terrain
 from RoguePy.Map.Entity import Entity
 from RoguePy.Map import terrains
 
 import RoguePy.State.GameState as GameState
-from RoguePy.libtcod import libtcod
+from RoguePy.Input import Keys
+from RoguePy.UI import Colors
 from RoguePy.UI import Elements
 
 class Demo5(GameState):
@@ -37,14 +38,14 @@ class Demo5(GameState):
 
     water = Terrain(True, False, 'Pool of water') \
       .setChar('~') \
-      .setColors(libtcod.blue, libtcod.darker_blue)
+      .setColors(Colors.blue, Colors.darker_blue)
 
     # This initialises a new empty map
     self.map = Map(len(grid[0]), len(grid))
 
     statue = Entity('Golden Statue')
     statue.setChar('&')
-    statue.setColor(libtcod.gold)
+    statue.setColor(Colors.gold)
 
     self.map.addEntity(statue, 20, 9)
 
@@ -103,40 +104,40 @@ class Demo5(GameState):
     self.fpsLabel = self.mapFrame.addElement(Elements.Label(8, 0, ""))
 
     self.cellLabel = self.frame.addElement(Elements.Label(32, 18, ""))
-    self.cellDesc = self.frame.addElement(Elements.Text(32, 20, 14, 1)).setDefaultColors(libtcod.darker_green)
-    self.cellItems = self.frame.addElement(Elements.List(32, 21, 14, 1)).setDefaultColors(libtcod.gold)
+    self.cellDesc = self.frame.addElement(Elements.Text(32, 20, 14, 1)).setDefaultColors(Colors.darker_green)
+    self.cellItems = self.frame.addElement(Elements.List(32, 21, 14, 1)).setDefaultColors(Colors.gold)
 
   def _setupInputs(self):
     self.view.setInputs({
       'quit': {
-        'key': libtcod.KEY_ESCAPE,
+        'key': Keys.Escape,
         'ch' : None,
         'fn' : self.quit
       },
       'step': {
-        'key': libtcod.KEY_SPACE,
+        'key': Keys.Space,
         'ch' : None,
         'fn' : self.next
       },
     })
     self.mapElement.setInputs({
       'selectionUp': {
-        'key': libtcod.KEY_UP,
+        'key': Keys.Up,
         'ch' : None,
         'fn' : self.moveSelectionUp
       },
       'selectionDn': {
-        'key': libtcod.KEY_DOWN,
+        'key': Keys.Down,
         'ch' : None,
         'fn' : self.moveSelectionDown
       },
       'selectionLeft': {
-        'key': libtcod.KEY_LEFT,
+        'key': Keys.Left,
         'ch' : None,
         'fn' : self.moveSelectionLeft
       },
       'selectionRight': {
-        'key': libtcod.KEY_RIGHT,
+        'key': Keys.Right,
         'ch' : None,
         'fn' : self.moveSelectionRight
       }
@@ -151,12 +152,12 @@ class Demo5(GameState):
     m.center(self.selectedX, self.selectedY)
     self.updateCellDesc()
     self.updateCellItems()
-    self.fpsLabel.setLabel("FPS:" + str(libtcod.sys_get_fps()))
+    self.fpsLabel.setLabel("FPS:" + str(RoguePy.getFps()))
 
   def drawOverlay(self):
     onScreen = self.mapElement.onScreen(self.selectedX, self.selectedY)
     self.mapOverlay.clear()
-    self.mapOverlay.putCh(onScreen[0], onScreen[1], '+', libtcod.light_green, libtcod.black)
+    self.mapOverlay.putCh(onScreen[0], onScreen[1], '+', Colors.light_green, Colors.black)
 
   def updateCellDesc(self):
     self.cellLabel.setLabel('Cell:' + str((self.selectedX, self.selectedY)))
