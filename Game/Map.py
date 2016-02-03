@@ -44,7 +44,7 @@ class CellType:
         self.bg = bg
 
 CellType.All = {
-    'wall'  : CellType('X', UI.Colors.Grey, UI.Colors.Black),
-    'floor' : CellType('.', UI.Colors.Grey, UI.Colors.Black),
+    'wall'  : CellType('X', UI.Colors.light_gray, UI.Colors.black),
+    'floor' : CellType('.', UI.Colors.light_gray, UI.Colors.black),
 }
 

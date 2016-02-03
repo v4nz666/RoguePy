@@ -1,8 +1,12 @@
 """
 ui-test-bed
 """
-import sys
-sys.path.append('../..')
+
+# Shenanigans to get RoguePy in the search path when it's the project root.
+import os, sys
+path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..')
+sys.path.append(path)
+
 import RoguePy
 import GameStates
 
