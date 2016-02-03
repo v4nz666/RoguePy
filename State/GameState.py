@@ -48,9 +48,6 @@ class GameState(object):
   def view(self,view):
     self.__view = view
 
-
-
-  
   def addHandler(self, name, interval, handler):
     if not name in self.tickHandlers:
       self.tickHandlers[name] = TickHandler(interval, handler)
@@ -63,9 +60,6 @@ class GameState(object):
         del self.tickHandlers[name]
     self.handlerQueue = []
 
-  ######
-  # The good stuff
-  ######
   def processInput(self):
     inputs = self.view.getActiveInputs()
     self.inputHandler.setInputs(inputs)
