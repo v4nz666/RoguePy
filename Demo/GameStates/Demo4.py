@@ -7,17 +7,26 @@ from RoguePy.UI import Elements
 
 class Demo4(GameState):
   
-  def __init__(self,name, manager, ui):
-    super(self.__class__, self).__init__(name, manager, ui)
-    
-    self.setBlocking(True)
+  def __init__(self,name, manager):
+    super(self.__class__, self).__init__(name, manager)
+    self._initPlayer()
+
+  def beforeLoad(self):
     self._setupView()
     self._setupInputs()
-  
+
+  def beforeUnload(self):
+    self._initPlayer()
+    self.playerStatFrame.enable()
+    self.updateStats()
+
   ###
   # Initialisation
   ###
-  
+
+  def _initPlayer(self):
+    self.player = Fighter()
+
   def _setupView(self):
     
     frame = Elements.Frame(0, 0, self.view.width, self.view.height)
@@ -40,33 +49,18 @@ class Demo4(GameState):
       "Press the A key to do some damage to the Player. Once he dies, the stats frame will be Disabled."
     frame.addElement(Elements.Text(30, 16, 16, 15, str2))
     self.frame = self.view.addElement(frame)
-    
-    class Fighter:
-      def __init__(self):
-        self.hp = 15
-        self.maxHp = 15
-        self.stats = {
-          'strength': 7,
-          'defense':  7,
-          'dodge':    6,
-          'stamina':  5,
-          'luck':     9
-        }
-    
-    player = Fighter()
-    
-    self.player = player
+
     self.playerStatFrame = frame.addElement(Elements.Frame(30, 4, 14, 8))
     self.playerStatFrame.setTitle('Player stats')
     
     self.playerStatFrame.addElement(Elements.Label(1, 1, "hp"))
     self.playerHpBar = self.playerStatFrame.addElement(Elements.Bar(8, 1, 5))\
-      .setMax(player.maxHp)\
-      .setVal(player.hp)\
+      .setMax(self.player.maxHp)\
+      .setVal(self.player.hp)\
       .setMinColor(libtcod.dark_red)\
       .setMaxColor(libtcod.dark_green)
     self.playerStatsDict = self.playerStatFrame.addElement(Elements.Dict(1, 2, 12, 5))\
-      .setItems(player.stats)
+      .setItems(self.player.stats)
     
   def _setupInputs(self):
     self.view.setInputs({
@@ -101,12 +95,25 @@ class Demo4(GameState):
   ###
 
   def attack(self):
-    if self.player.hp > 0:
-      self.player.hp -= 1
-    else:
+    self.player.hp -= 1
+    if self.player.hp <= 0:
       self.playerStatFrame.disable()
+    self.updateStats()
 
   def next(self):
-    self._manager.setNextState('demo5')
+    self.manager.setNextState('demo5')
   def quit(self):
-    self._manager.setNextState('quit')
+    self.manager.setNextState('quit')
+
+
+class Fighter:
+  def __init__(self):
+    self.hp = 15
+    self.maxHp = 15
+    self.stats = {
+      'strength': 7,
+      'defense':  7,
+      'dodge':    6,
+      'stamina':  5,
+      'luck':     9
+    }

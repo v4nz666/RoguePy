@@ -13,11 +13,11 @@ from RoguePy.UI import Elements
 
 class Demo5(GameState):
 
-  def __init__(self,name, manager, ui):
+  def __init__(self,name, manager):
 
-    super(self.__class__, self).__init__(name, manager, ui)
+    super(self.__class__, self).__init__(name, manager)
 
-    self.setBlocking(True)
+    self.addHandler('updateUi', 1, self.updateUi)
 
     grid = [
       "               XXXXXXXXX ",
@@ -35,10 +35,9 @@ class Demo5(GameState):
       " XXXXXXXXXXX             ",
       ]
 
-    water = Terrain(True, False, 'Pool of water')\
-      .setChar('~')\
+    water = Terrain(True, False, 'Pool of water') \
+      .setChar('~') \
       .setColors(libtcod.blue, libtcod.darker_blue)
-
 
     # This initialises a new empty map
     self.map = Map(len(grid[0]), len(grid))
@@ -48,12 +47,6 @@ class Demo5(GameState):
     statue.setColor(libtcod.gold)
 
     self.map.addEntity(statue, 20, 9)
-
-    self.selectedX = 0
-    self.selectedY = 0
-
-    self._setupView()
-    self._setupInputs()
 
     for y in range(len(grid)):
       row = grid[y]
@@ -68,10 +61,14 @@ class Demo5(GameState):
           self.map.getCell(x, y).setTerrain(water)
         else:
           self.map.getCell(x, y).setTerrain(terrains.EMPTY)
-          ###
 
-  # Initialisation
-  ###
+
+  def beforeLoad(self):
+    self._setupView()
+    self._setupInputs()
+    self.selectedX = 0
+    self.selectedY = 0
+
   def _setupView(self):
 
     frame = Elements.Frame(0, 0, self.view.width, self.view.height)
@@ -99,14 +96,11 @@ class Demo5(GameState):
 
     self.mapFrame = self.frame.addElement(Elements.Frame(32, 2, 15, 15)).setTitle('Map')
     self.mapElement = self.mapFrame.addElement(Elements.Map(1, 1, 13, 13, self.map))
-    # The overlay containing our crosshair
-    self.selectedOverlay = self.mapElement.addElement(Elements.Element(0, 0, 13, 13))
-    # We only want to display the "+" char, and not disturb the map underneath
-    self.selectedOverlay.bgOpacity = 0
-    # Override the draw method, so we can easily draw our "+"
-    self.selectedOverlay.draw = self.drawOverlay
+    self.mapOverlay = self.mapElement.addElement(Elements.Element(0, 0, 13, 13))
+    self.mapOverlay.bgOpacity = 0
+    self.mapOverlay.draw = self.drawOverlay
 
-    self.fpsLabel = self.frame.addElement(Elements.Label(10, 0, ""))
+    self.fpsLabel = self.mapFrame.addElement(Elements.Label(8, 0, ""))
 
     self.cellLabel = self.frame.addElement(Elements.Label(32, 18, ""))
     self.cellDesc = self.frame.addElement(Elements.Text(32, 20, 14, 1)).setDefaultColors(libtcod.darker_green)
@@ -152,7 +146,7 @@ class Demo5(GameState):
   # Game Loop stuff
   ###
 
-  def tick(self):
+  def updateUi(self):
     m = self.mapElement
     m.center(self.selectedX, self.selectedY)
     self.updateCellDesc()
@@ -160,9 +154,9 @@ class Demo5(GameState):
     self.fpsLabel.setLabel("FPS:" + str(libtcod.sys_get_fps()))
 
   def drawOverlay(self):
-    con = self.selectedOverlay.console
     onScreen = self.mapElement.onScreen(self.selectedX, self.selectedY)
-    libtcod.console_put_char_ex(con, onScreen[0], onScreen[1], '+', libtcod.light_green, libtcod.black)
+    self.mapOverlay.clear()
+    self.mapOverlay.putCh(onScreen[0], onScreen[1], '+', libtcod.light_green, libtcod.black)
 
   def updateCellDesc(self):
     self.cellLabel.setLabel('Cell:' + str((self.selectedX, self.selectedY)))
@@ -198,6 +192,6 @@ class Demo5(GameState):
       self.selectedX += 1
 
   def next(self):
-    self._manager.setNextState('demo1')
+    self.manager.setNextState('demo1')
   def quit(self):
-    self._manager.setNextState('quit')
+    self.manager.setNextState('quit')

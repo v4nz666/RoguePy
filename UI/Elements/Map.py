@@ -9,8 +9,7 @@ class Map(Element):
     self._offsetY = 0
     self.halfW = self.width / 2
     self.halfH = self.height / 2
-  
-  
+
   def center(self, x, y):
     """
     Centers the view-port of the ui element around coordinates x, y of the map. If the coordinate is near the edge of
@@ -36,6 +35,7 @@ class Map(Element):
     else:
       self._offsetY = self._map.height - self.height
     self.setDirty()
+    return self
 
 
   def onScreen(self, x, y):
