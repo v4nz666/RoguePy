@@ -1,5 +1,9 @@
 from RoguePy.libtcod import libtcod
 from RoguePy.UI.Elements import Element
+from collections import namedtuple
+from .. import Colors
+
+CellView = namedtuple('CellView', ['char', 'fg', 'bg'])
 
 class Map(Element):
   def __init__(self, x, y, w, h, _map):
@@ -55,10 +59,15 @@ class Map(Element):
         y = sy + self._offsetY
         if (x >= 0 and x < self._map.width and y >= 0 and y < self._map.height):
           c = self._map.getCell(x, y)
-          libtcod.console_put_char_ex(self.console, x, y, c.terrain.char, c.terrain.fg, c.terrain.bg)
+          cv = self.cellToView(c)
+          libtcod.console_put_char_ex(self.console, x, y, cv.char, cv.fg, cv.bg)
 
-        for i in range(len(c.entities)):
-          e = c.entities[i]
-          libtcod.console_put_char(self.console, x, y, e.char)
-          libtcod.console_set_char_foreground(self.console, x, y, e.color)
     self.setDirty(False)
+
+  def cellToView(self, c):
+    result = CellView(c.terrain.char, c.terrain.fg, c.terrain.bg)
+    if c.entity != None:
+      result = CellView('@', Colors.white, result.bg)
+    elif c.items:
+      pass
+    return result

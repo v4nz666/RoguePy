@@ -25,16 +25,19 @@ class Map:
         cell = {
             '#' : Cell('wall'),
             '.' : Cell('floor'),
+            'd' : Cell('door'),
+            'w' : Cell('window'),
         }.get(ch)
         if cell == None:
-            raise Exception("Unknown cell token '" + ch + "'")
+            raise Exception("Unknown cell token [" + ch + "]")
         return cell
 
 class Cell:
     def __init__(self, type):
         self.type = type
         self.terrain = CellType.All[type]
-        self.entities = []
+        self.entity = None
+        self.items = []
         pass
 
 class CellType:
@@ -44,7 +47,9 @@ class CellType:
         self.bg = bg
 
 CellType.All = {
-    'wall'  : CellType('X', UI.Colors.light_gray, UI.Colors.black),
-    'floor' : CellType('.', UI.Colors.light_gray, UI.Colors.black),
+    'wall'    : CellType('X', UI.Colors.light_gray, UI.Colors.black),
+    'floor'   : CellType('.', UI.Colors.light_gray, UI.Colors.black),
+    'door'    : CellType('+', UI.Colors.copper    , UI.Colors.black),
+    'window'  : CellType('+', UI.Colors.light_blue, UI.Colors.black),
 }
 
