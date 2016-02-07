@@ -1,8 +1,7 @@
-import Map
 
 class Entity:
 
-    def __init__(self, map, x, y):
+    def __init__(self, map, x, y, name, ch, fg):
         c = map.getCell(x, y)
         if ( c.entity != None ):
             raise Exception("Entity already present in map cell (%d,%d)" % (x, y))
@@ -10,6 +9,11 @@ class Entity:
         self.map = map
         self.x = x
         self.y = y
+        self.name = name
+        self.ch = ch
+        self.fg = fg
+        # TEMP: MessageScroller test.
+        self.ms = None
 
     def tryMove(self, dx, dy):
         if self.canMove(dx, dy):
@@ -19,7 +23,10 @@ class Entity:
             self.map.getCell(self.x, self.y).entity = self
             return True
         else:
-            print "Bonk! (%s)" % self.map.getCell(self.x + dx, self.y + dy).type
+            msg = "Bonk! (%s)" % self.map.getCell(self.x + dx, self.y + dy).type
+            # TEMP: MessageScroller test.
+            if self.ms:
+                self.ms.message(msg)
             return False
 
     def canMove(self, dx, dy):

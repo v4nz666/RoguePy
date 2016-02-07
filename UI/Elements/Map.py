@@ -67,7 +67,7 @@ class Map(Element):
   def cellToView(self, c):
     result = CellView(c.terrain.char, c.terrain.fg, c.terrain.bg)
     if c.entity != None:
-      result = CellView('@', Colors.white, result.bg)
+      result = CellView(c.entity.ch, c.entity.fg, result.bg)
     elif c.items:
       pass
     return result
