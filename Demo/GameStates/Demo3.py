@@ -50,13 +50,18 @@ class Demo3(GameState):
       "You must pass your view object to the show and hide methods so the modal may trigger " + \
       "it to disable the other elements."
     self.frame.addElement(Elements.Text(14, halfY + 4, 32, 10, str2))
+
+    def makeSetBg(color):
+      def setBg(idx):
+        self.frame.setDefaultBackground(color, True)
+      return setBg
     
     menuItems = [
-      {'Black' : self.menuOnSelect},
-      {'White' : self.menuOnSelect},
-      {'Red'   : self.menuOnSelect},
-      {'Blue'  : self.menuOnSelect},
-      {'Green' : self.menuOnSelect}
+      {'Black' : makeSetBg(Colors.black)},
+      {'Gray'  : makeSetBg(Colors.gray)},
+      {'Red'   : makeSetBg(Colors.red)},
+      {'Blue'  : makeSetBg(Colors.blue)},
+      {'Green' : makeSetBg(Colors.green)}
     ]
     self.menuFrame = self.frame.addElement(Elements.Frame(1, halfY + 4, 12, 6))
     self.menuFrame.setTitle("Bg Color")
@@ -166,61 +171,28 @@ class Demo3(GameState):
         'fn' : self.selectB
       }
     })
-    
-    self.sliderR.setInputs({
-      'sliderR-left': {
-        'key' : Keys.Left,
-        'ch'  : None,
-        'fn'  : self.sliderR.left
-      },
-      'sliderR-right': {
-        'key' : Keys.Right,
-        'ch'  : None,
-        'fn'  : self.sliderR.right
-      }
-    })
-    
-    self.sliderG.setInputs({
-      'sliderG-left': {
-        'key' : Keys.Left,
-        'ch'  : None,
-        'fn'  : self.sliderG.left
-      },
-      'sliderG-right': {
-        'key' : Keys.Right,
-        'ch'  : None,
-        'fn'  : self.sliderG.right
-      }
-    })
-    
-    self.sliderB.setInputs({
-      'sliderB-left': {
-        'key' : Keys.Left,
-        'ch'  : None,
-        'fn'  : self.sliderB.left
-      },
-      'sliderB-right': {
-        'key' : Keys.Right,
-        'ch'  : None,
-        'fn'  : self.sliderB.right
-      }
-    })
-  
+
+    def setSliderInputs(slider):
+      slider.setInputs({
+        'left' : {
+          'key' : Keys.Left,
+          'ch'  : None,
+          'fn'  : slider.left
+        },
+        'right' : {
+          'key' : Keys.Right,
+          'ch'  : None,
+          'fn'  : slider.right
+        }
+      })
+
+    setSliderInputs(self.sliderR)
+    setSliderInputs(self.sliderG)
+    setSliderInputs(self.sliderB)
+
   ###
   # Input callbacks
   ###
-
-  def menuOnSelect(self, index):
-    if index == 0:
-      self.frame.setDefaultBackground(Colors.black, True)
-    elif index == 1:
-      self.frame.setDefaultBackground(Colors.white, True)
-    elif index == 2:
-      self.frame.setDefaultBackground(Colors.red, True)
-    elif index == 3:
-      self.frame.setDefaultBackground(Colors.blue, True)
-    elif index == 4:
-      self.frame.setDefaultBackground(Colors.green, True)
 
   def changeForeground(self):
     r = self.sliderR.val
