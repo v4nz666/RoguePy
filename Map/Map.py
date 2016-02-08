@@ -17,6 +17,3 @@ class Map(object):
 
   def getTerrain(self, x, y):
     return self.getCell(x, y).terrain
-
-  def addEntity(self, entity, x, y, first=False):
-    self.getCell(x, y).addEntity(entity, first)

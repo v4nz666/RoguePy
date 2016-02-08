@@ -1,12 +1,12 @@
-from RoguePy.libtcod import libtcod
+from RoguePy.UI import Colors
 
 class Entity(object):
   def __init__(self, name):
     self.name = name
-    self.char = ' '
-    self.color = libtcod.black
+    self.ch = ' '
+    self.fg = Colors.black
 
   def setChar(self, ch):
-    self.char = ch
+    self.ch = ch
   def setColor(self, color):
-    self.color = color
+    self.fg = color

@@ -1,20 +1,19 @@
 
-import UI
-import State
+from .. import UI
+from .. import State
 
 class Game:
     def __init__(self, title, width, height, fullscreen):
         print title, width, height, fullscreen
         self.ui = UI.UI()
         self.ui.init(width, height, fullscreen, title)
-        self.stateManager = State.StateManager()
+        self.stateManager = State.StateManager(self.ui)
 
     def addState(self, state):
-        state._manager = self.stateManager
-        state._initUi(self.ui)
-        # Only necessary because we're janking in the view above, and initialization requires a view...
-        state.init()
+        state.manager = self.stateManager
+        # Order is important here, as addState() provides the View which is used by init()...
         self.stateManager.addState(state)
+        state.init()
 
     def run(self, stateName):
         self.stateManager.setCurrentState(stateName)

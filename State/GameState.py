@@ -7,7 +7,7 @@ from TickHandler import TickHandler
 
 
 class GameState(object):
-  def __init__(self, name, manager):
+  def __init__(self, name, manager = None):
     self.name = name
     self.manager = manager
     self.inputHandler = Input.KeyboardHandler()
