@@ -195,9 +195,9 @@ class Demo3(GameState):
   ###
 
   def changeForeground(self):
-    r = self.sliderR.getVal()
-    g = self.sliderG.getVal()
-    b = self.sliderB.getVal()
+    r = self.sliderR.val
+    g = self.sliderG.val
+    b = self.sliderB.val
     color = Color(r, g, b)
     self.frame.setDefaultForeground(color, True)
   
