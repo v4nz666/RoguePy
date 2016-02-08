@@ -60,7 +60,7 @@ class Map(Element):
         if (x >= 0 and x < self._map.width and y >= 0 and y < self._map.height):
           c = self._map.getCell(x, y)
           cv = self.cellToView(c)
-          libtcod.console_put_char_ex(self.console, x, y, cv.char, cv.fg, cv.bg)
+          libtcod.console_put_char_ex(self.console, sx, sy, cv.char, cv.fg, cv.bg)
 
     self.setDirty(False)
 
