@@ -223,10 +223,10 @@ class Demo3(GameState):
       self.frame.setDefaultBackground(Colors.green, True)
 
   def changeForeground(self):
-    r = self.sliderR.getVal()
-    g = self.sliderG.getVal()
-    b = self.sliderB.getVal()
-    color = libtcod.Color(r, g, b)
+    r = self.sliderR.val
+    g = self.sliderG.val
+    b = self.sliderB.val
+    color = Color(r, g, b)
     self.frame.setDefaultForeground(color, True)
   
   def selectR(self):

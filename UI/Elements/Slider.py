@@ -9,46 +9,53 @@ from RoguePy.UI.Elements import Element
 class Slider(Element):
   
   def __init__(self, x, y, w, min, max, val=0, step=1):
-    self._min = min
-    self._max = max
-    self._val = val
-    self.setStep(step)
-    
+    self.min = min
+    self.max = max
+    self.__val = val
+    self.step = step
+
     super(Slider, self).__init__(x, y, w, 1)
     self.sliderWidth = self.width - 2
-    self.valPerChar = 1 + (self._max - self._min) / self.sliderWidth
+    self.valPerChar = (self.max - self.min) / self.sliderWidth
     self.setChars(['<','-','>','|'])
+
+  @property
+  def min(self):
+    return self.__min
+  @min.setter
+  def min(self, min):
+    self.__min = min
+  
+  @property
+  def max(self):
+    return self.__max
+  @max.setter
+  def max(self, max):
+    self.__max = max
+  
+  @property
+  def val(self):
+    return self.__val
+  @val.setter
+  def val(self, val):
+    if val > self.max:
+      val = self.max
+    elif val < self.min:
+      val = self.min
+    if val != self.val:
+      self.__val = val
+      self.onChange()
+      self.setDirty()
+  
+  @property
+  def step(self):
+    return self.__step
+  @step.setter
+  def step(self, step):
+    self.__step = step
   
   def onChange(self):
     pass
-  
-  def setMin(self, min):
-    self._min = min
-  def getMin(self):
-    return self._min
-  
-  def setMax(self, max):
-    self._max = max
-  def getMax(self):
-    return self._max
-
-  def setVal(self, val):
-    if val > self._max:
-      val = self._max
-    elif val < self._min:
-      val = self._min
-    if val != self._val:
-      self._val = val
-      self.onChange()
-      self.setDirty()
-    
-  def getVal(self):
-    return self._val
-  
-  def setStep(self, step):
-    self._step = step
-  def getStep(self):
-    return self.step
   
   def setChars(self, chars):
     if not len(chars) == 4:
@@ -57,19 +64,18 @@ class Slider(Element):
     self._center = chars[1]
     self._right = chars[2]
     self._bar = chars[3]
-  
+
   def left(self):
-    self.setVal(self._val - self._step)
+    self.val = self.val - self.step
   def right(self):
-    self.setVal(self._val + self._step)
+    self.val = self.val + self.step
   
   def draw(self):
     libtcod.console_put_char(self.console, 0, 0,self._left)
     for x in range(self.sliderWidth):
       libtcod.console_put_char(self.console, x + 1, 0, self._center)
     libtcod.console_put_char(self.console, self.width - 1, 0, self._right)
-
-    sliderPosition = min(self.sliderWidth, self._val / self.valPerChar)
-    libtcod.console_put_char(self.console, sliderPosition, 0, self._bar)
+    sliderPosition = min(self.sliderWidth - 1, self.val / self.valPerChar)
+    libtcod.console_put_char(self.console, sliderPosition + 1, 0, self._bar)
 
     self.setDirty(False)
