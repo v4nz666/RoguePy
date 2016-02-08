@@ -47,7 +47,7 @@ class Demo5(GameState):
     statue.setChar('&')
     statue.setColor(Colors.gold)
 
-    self.map.addEntity(statue, 20, 9)
+    self.map.getCell(20, 9).entity = statue
 
     for y in range(len(grid)):
       row = grid[y]
@@ -164,11 +164,11 @@ class Demo5(GameState):
     cellTerrain = self.map.getTerrain(self.selectedX, self.selectedY)
     self.cellDesc.setText(cellTerrain.desc)
   def updateCellItems(self):
-    items = self.map.getCell(self.selectedX, self.selectedY).entities
+    e = self.map.getCell(self.selectedX, self.selectedY).entity
     itemNames = []
 
-    for i in range(len(items)):
-      itemNames.append(items[i].name)
+    if e != None:
+      itemNames.append(e.name)
     self.cellItems.setItems(itemNames)
 
 

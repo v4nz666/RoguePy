@@ -9,7 +9,8 @@ class Cell(object):
     :return: self
     """
     self.terrain = terrain
-    self.entities = []
+    self.entity = None
+    self.items = []
 
 
   def setTerrain(self, terrain):
@@ -20,15 +21,3 @@ class Cell(object):
 
   def passable(self):
     return self.terrain.walk
-
-  def addEntity(self, entity, first=False):
-    if first:
-      self.entities.insert(0,entity)
-    else:
-      self.entities.append(entity)
-
-  def removeEntity(self, entity):
-    try:
-      self.entities.remove(entity)
-    except KeyError:
-      pass
