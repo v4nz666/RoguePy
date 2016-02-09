@@ -16,6 +16,8 @@ class GameState(object):
     self.handlerQueue = []
     self.view = None
 
+    self.focused = None
+
   def initView(self, ui):
     self.view = UI.View(ui)
   
@@ -61,10 +63,20 @@ class GameState(object):
     self.handlerQueue = []
 
   def processInput(self):
-    inputs = self.view.getActiveInputs()
+    inputs = {}
+    if self.view.inputsEnabled:
+      inputs.update(self.view.getInputs())
+    if self.focused is not None:
+      inputs.update(self.focused.getInputs())
     self.inputHandler.setInputs(inputs)
     self.inputHandler.handleInput()
-  
+
+  def setFocus(self, el):
+    self.focused = el
+
+  def blur(self):
+    self.focused = None
+
   def beforeLoad(self):
     pass
   def beforeUnload(self):

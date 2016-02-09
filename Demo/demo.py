@@ -37,6 +37,3 @@ stateManager.setCurrentState('splash')
 
 while not ui.is_closed():
   stateManager.doTick()
-
-  
-  

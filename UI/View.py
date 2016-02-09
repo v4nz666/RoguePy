@@ -79,7 +79,7 @@ class View(object):
     self._inputs = inputs
   def getInputs(self):
     return self._inputs
-  
+
   def storeState(self):
     """
     Store the enabled status of all elements. This method must be called prior to calling restoreState. Use this method
@@ -121,29 +121,6 @@ class View(object):
     self.inputsEnabled = True
   def disableInputs(self):
     self.inputsEnabled = False
-  
-  def getActiveInputs(self, _inputs={}, el=None):
-    """
-    Recursive function to get the inputs of our self, and all active elements.
-
-    :param _inputs: The inputs we've gathered so far
-    :param el: The current element we're working on
-    :return: The full list of all active Inputs
-    """
-    if el is None:
-      el = self
-      inputs = {}
-    else:
-      inputs = _inputs
-    if ( el == self ) or ( el.visible and el.enabled ):
-      if ( el == self and self.inputsEnabled ) or el != self:
-        newInputs = el.getInputs()
-        inputs.update(newInputs)
-
-      for e in el.getElements():
-        self.getActiveInputs(inputs, e)
-    if el == self:
-      return inputs
 
   def setDirty(self, dirty=True):
     self._dirty = dirty

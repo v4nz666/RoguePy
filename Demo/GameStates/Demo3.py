@@ -11,7 +11,7 @@ class Demo3(GameState):
  
   def __init__(self,name, manager):
     super(self.__class__, self).__init__(name, manager)
-   
+
   def beforeLoad(self):
     self._setupView()
     self._setupInputs()
@@ -110,7 +110,7 @@ class Demo3(GameState):
     
     
   def _setupInputs(self):
-    self.frame.setInputs({
+    self.view.setInputs({
       'quit': {
         'key': Keys.Escape,
         'ch' : None,
@@ -125,18 +125,7 @@ class Demo3(GameState):
         'key': Keys.Tab,
         'ch' : None,
         'fn' : self.toggleModal
-      }
-    })
-    
-    self.modal.setInputs({
-      'showModal': {
-        'key': Keys.Tab,
-        'ch' : None,
-        'fn' : self.toggleModal
-      }
-    })
-    
-    self.menu.setInputs({
+      },
       'menuScrollUp': {
         'key' : Keys.Up,
         'ch'  : None,
@@ -151,10 +140,7 @@ class Demo3(GameState):
         'key' : Keys.Enter,
         'ch'  : None,
         'fn'  : self.menu.selectFn
-      }
-    })
-    
-    self.sliderFrame.setInputs({
+      },
       'selectR': {
         'key': None,
         'ch' : "r",
@@ -169,6 +155,15 @@ class Demo3(GameState):
         'key': None,
         'ch' : "b",
         'fn' : self.selectB
+      }
+
+    })
+    
+    self.modal.setInputs({
+      'hideModal': {
+        'key': Keys.Tab,
+        'ch' : None,
+        'fn' : self.toggleModal
       }
     })
 
@@ -190,6 +185,8 @@ class Demo3(GameState):
     setSliderInputs(self.sliderG)
     setSliderInputs(self.sliderB)
 
+    self.setFocus(self.sliderR)
+
   ###
   # Input callbacks
   ###
@@ -205,19 +202,26 @@ class Demo3(GameState):
     self.sliderR.enable()
     self.sliderG.disable()
     self.sliderB.disable()
+    self.setFocus(self.sliderR)
   def selectG(self):
     self.sliderR.disable()
     self.sliderG.enable()
     self.sliderB.disable()
+    self.setFocus(self.sliderG)
   def selectB(self):
     self.sliderR.disable()
     self.sliderG.disable()
     self.sliderB.enable()
-  
+    self.setFocus(self.sliderB)
+
   def toggleModal(self):
+
     if self.modal.enabled:
+      self.focused = self.lastFocused
       self.modal.hide(self.view)
     else:
+      self.focused = self.modal
+      self.lastFocused = self.focused
       self.modal.show(self.view)
   def modalClosed(self):
     print "Called back from Modal onClose"

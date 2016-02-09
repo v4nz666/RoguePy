@@ -83,10 +83,7 @@ class Demo2(GameState):
         'key': Keys.Tab,
         'ch' : None,
         'fn' : self.toggleInv
-      }
-    })
-    
-    self.list.setInputs({
+      },
       'scrollUp': {
         'key': Keys.Up,
         'ch' : None,

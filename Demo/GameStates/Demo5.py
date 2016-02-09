@@ -119,8 +119,6 @@ class Demo5(GameState):
         'ch' : None,
         'fn' : self.next
       },
-    })
-    self.mapElement.setInputs({
       'selectionUp': {
         'key': Keys.Up,
         'ch' : None,
