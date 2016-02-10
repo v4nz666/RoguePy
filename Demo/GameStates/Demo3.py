@@ -5,6 +5,7 @@ import RoguePy.State.GameState as GameState
 from RoguePy.Input import Keys
 from RoguePy.UI import Colors
 from RoguePy.UI import Elements
+from RoguePy.UI import View
 from RoguePy.libtcod import Color
 
 class Demo3(GameState):
@@ -45,10 +46,10 @@ class Demo3(GameState):
     self.frame.addElement(Elements.Text(2, 2, self.view.width - 4, halfY + 1, str))
     
     str2 = \
-      "Press TAB to pop up a modal dialog. Modal elements disable all other elements when their " + \
-      "show() method is called. Control is returned when the modal's hide() method is called. " + \
-      "You must pass your view object to the show and hide methods so the modal may trigger " + \
-      "it to disable the other elements."
+      "Press TAB to pop up a modal dialog. Modals are accomplished by creating a separate View from " + \
+      "from the default view. You can then call the addView method to open the modal. Modals need not " + \
+      "be the full size of the screen, and the previous view will be visible behind it. Close a modal View " + \
+      "by calling removeView()"
     self.frame.addElement(Elements.Text(14, halfY + 4, 32, 10, str2))
 
     def makeSetBg(color):
@@ -86,7 +87,8 @@ class Demo3(GameState):
     self.sliderB = self.sliderFrame.addElement(Elements.Slider(3, 3, 8, 0, 255, bVal, 8))
     self.sliderB.onChange = self.changeForeground
     self.sliderB.disable()
-    
+
+    #TODO rewrite
     modalText = \
       "The Modal element is simply a wrapper. It has no visual components, but allows you to nest " + \
       "Elements within it. The inputs associated with the modal, and its descendants, will be the " + \
@@ -101,14 +103,12 @@ class Demo3(GameState):
     modalW = halfX * 3 / 2 + 2
     modalH = halfY * 3 / 2
     
-    self.modal = self.view.addElement(Elements.Modal(modalX, modalY, modalW, modalH))
-    self.modaleFrame = self.modal.addElement(Elements.Frame(0, 0, modalW, modalH))
-    self.modaleFrame.setTitle("Modal Elements")
+    self.modal = View(modalW, modalH, modalX, modalY)
+    self.modalFrame = self.modal.addElement(Elements.Frame(0, 0, modalW, modalH))
+    self.modalFrame.setTitle("Modal Elements")
     self.modalText = self.modal.addElement(Elements.Text(2, 2, modalW - 4, modalH - 4, modalText))
     self.modalLabel  = self.modal.addElement(Elements.Label(3, modalH - 1, "TAB - Back"))
-    self.modal.onClose = self.modalClosed
-    
-    
+
   def _setupInputs(self):
     self.view.setInputs({
       'quit': {
@@ -124,7 +124,7 @@ class Demo3(GameState):
       'showModal': {
         'key': Keys.Tab,
         'ch' : None,
-        'fn' : self.toggleModal
+        'fn' : self.openModal
       },
       'menuScrollUp': {
         'key' : Keys.Up,
@@ -158,12 +158,12 @@ class Demo3(GameState):
       }
 
     })
-    
+
     self.modal.setInputs({
       'hideModal': {
         'key': Keys.Tab,
         'ch' : None,
-        'fn' : self.toggleModal
+        'fn' : self.closeModal
       }
     })
 
@@ -214,17 +214,11 @@ class Demo3(GameState):
     self.sliderB.enable()
     self.setFocus(self.sliderB)
 
-  def toggleModal(self):
+  def openModal(self):
+    self.addView(self.modal)
+  def closeModal(self):
+    self.removeView()
 
-    if self.modal.enabled:
-      self.focused = self.lastFocused
-      self.modal.hide(self.view)
-    else:
-      self.focused = self.modal
-      self.lastFocused = self.focused
-      self.modal.show(self.view)
-  def modalClosed(self):
-    print "Called back from Modal onClose"
 
   def next(self):
     self.manager.setNextState('demo4')
