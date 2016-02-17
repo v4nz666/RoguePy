@@ -71,3 +71,55 @@ class Map(Element):
     elif c.items:
       pass
     return result
+
+  # TODO: Does this belong here, or in View? It's a bit hackish because we only want to replace
+  #   a subset of the inputs, not the whole input set.
+  # TODO: If input binding is streamlined, this won't work anymore.
+  def setDirectionalInputHandler(self, fn):
+    from RoguePy.Input import Keys
+    self._inputs['move_sw'] = {
+        'key' : Keys.NumPad1,
+        'ch'  : None,
+        'fn'  : lambda: fn(-1,1)
+    }
+    self._inputs['move_s'] = {
+        'key' : Keys.NumPad2,
+        'ch'  : None,
+        'fn'  : lambda: fn(0,1)
+    }
+    self._inputs['move_se'] = {
+        'key' : Keys.NumPad3,
+        'ch'  : None,
+        'fn'  : lambda: fn(1,1)
+    }
+    self._inputs['move_w'] = {
+        'key' : Keys.NumPad4,
+        'ch'  : None,
+        'fn'  : lambda: fn(-1,0)
+    }
+    self._inputs['move_none'] = {
+        'key' : Keys.NumPad5,
+        'ch'  : None,
+        'fn'  : lambda: fn(0,0)
+    }
+    self._inputs['move_e'] = {
+        'key' : Keys.NumPad6,
+        'ch'  : None,
+        'fn'  : lambda: fn(1,0)
+    }
+    self._inputs['move_nw'] = {
+        'key' : Keys.NumPad7,
+        'ch'  : None,
+        'fn'  : lambda: fn(-1,-1)
+    }
+    self._inputs['move_n'] = {
+        'key' : Keys.NumPad8,
+        'ch'  : None,
+        'fn'  : lambda: fn(0,-1)
+    }
+    self._inputs['move_ne'] = {
+        'key' : Keys.NumPad9,
+        'ch'  : None,
+        'fn'  : lambda: fn(1,-1)
+    }
+    

@@ -26,7 +26,6 @@ class MessageScroller(Element):
       h += i.height
       if h >= self.height:
         break
-    print "%d elements fit on screen" % n
     self.messages = self.messages[-n:]
     self.setDirty(True)
 

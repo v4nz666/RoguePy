@@ -12,26 +12,35 @@ class Entity:
         self.name = name
         self.ch = ch
         self.fg = fg
-        # TEMP: MessageScroller test.
-        self.ms = None
 
     def tryMove(self, dx, dy):
-        if self.canMove(dx, dy):
-            self.map.getCell(self.x, self.y).entity = None
-            self.x += dx
-            self.y += dy
-            self.map.getCell(self.x, self.y).entity = self
+        # Rest / skip check.
+        if dx == 0 and dy == 0:
             return True
-        else:
-            msg = "Bonk! (%s)" % self.map.getCell(self.x + dx, self.y + dy).type
-            # TEMP: MessageScroller test.
-            if self.ms:
-                self.ms.message(msg)
+
+        # Adjacency check.
+        if abs(dx) >  1 or abs(dy) > 1:
             return False
 
-    def canMove(self, dx, dy):
-        c = self.map.getCell(self.x + dx, self.y + dy)
-        return abs(dx) <= 1 and abs(dy) <= 1 and self.canEnter(c)
+        dest = self.map.getCell(self.x + dx, self.y + dy)
+
+        # Entity check.
+        if dest.entity != None:
+            self.map.trigger('entity_interact', self, dest.entity)
+            return False
+
+        # Terrain check.
+        if not self.canEnter(dest):
+            self.map.trigger('entity_collide', self, dest)
+            return False
+
+        # TODO: This should be a map call because (a) it's ugly, and (b) it makes assumptions about
+        #   how map stores entities.
+        self.map.getCell(self.x, self.y).entity = None
+        self.x += dx
+        self.y += dy
+        self.map.getCell(self.x, self.y).entity = self
+        return True
 
     def canEnter(self, cell):
-        return cell.entity == None and cell.type == 'floor'
+        return cell.type == 'floor'
