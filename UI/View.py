@@ -18,8 +18,13 @@ class View(object):
     self.setDirty(True)
 
     self._elements = []
-    self._inputs = {}
-    
+
+    self._keyBoardInputs = {}
+    self._mouseInputs = {
+      'rClick': None,
+      'lClick': None
+    }
+
     self._storedEnabled = None
     
     self.console = libtcod.console_new(self.width, self.height)
@@ -34,7 +39,7 @@ class View(object):
     for e in self._elements:
       e.clearAll()
     self._elements = []
-    self._inputs = {}
+    self._keyBoardInputs = {}
 
   def getElements(self):
     return self._elements
@@ -56,9 +61,9 @@ class View(object):
       self._elements.remove(el)
     self.setDirty()
   
-  def setInputs(self, inputs):
+  def setKeyInputs(self, inputs):
     """
-    Set the inputs to be bound to this View/Element
+    Set the keyboard inputs to be bound to this View/Element
 
     :param inputs: Dictionary of input definitions. Takes the format:
       {
@@ -76,9 +81,16 @@ class View(object):
         ...
       }
     """
-    self._inputs = inputs
+    self._keyBoardInputs = inputs
+
+
+  def setMouseInputs(self, inputs):
+    self._mouseInputs = inputs
+
+
   def getInputs(self):
-    return self._inputs
+
+    return self._keyBoardInputs
   
   def storeState(self):
     """
@@ -132,18 +144,18 @@ class View(object):
     """
     if el is None:
       el = self
-      inputs = {}
+      keyInputs = {}
     else:
-      inputs = _inputs
+      keyInputs = _inputs
     if ( el == self ) or ( el.visible and el.enabled ):
       if ( el == self and self.inputsEnabled ) or el != self:
         newInputs = el.getInputs()
-        inputs.update(newInputs)
+        keyInputs.update(newInputs)
 
       for e in el.getElements():
-        self.getActiveInputs(inputs, e)
+        self.getActiveInputs(keyInputs, e)
     if el == self:
-      return inputs
+      return keyInputs, self._mouseInputs
 
   def setDirty(self, dirty=True):
     self._dirty = dirty

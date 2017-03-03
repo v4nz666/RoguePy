@@ -45,7 +45,7 @@ class Demo1(GameState):
     libtcod.console_print_rect(self.element.console, x, y, w, h, str)
     
   def _setupInputs(self):
-    self.view.setInputs({
+    self.view.setKeyInputs({
       'quit': {
         'key': Keys.Escape,
         'ch': None,

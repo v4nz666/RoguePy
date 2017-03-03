@@ -110,7 +110,7 @@ class Demo3(GameState):
     
     
   def _setupInputs(self):
-    self.frame.setInputs({
+    self.frame.setKeyInputs({
       'quit': {
         'key': Keys.Escape,
         'ch' : None,
@@ -128,7 +128,7 @@ class Demo3(GameState):
       }
     })
     
-    self.modal.setInputs({
+    self.modal.setKeyInputs({
       'showModal': {
         'key': Keys.Tab,
         'ch' : None,
@@ -136,7 +136,7 @@ class Demo3(GameState):
       }
     })
     
-    self.menu.setInputs({
+    self.menu.setKeyInputs({
       'menuScrollUp': {
         'key' : Keys.Up,
         'ch'  : None,
@@ -154,7 +154,7 @@ class Demo3(GameState):
       }
     })
     
-    self.sliderFrame.setInputs({
+    self.sliderFrame.setKeyInputs({
       'selectR': {
         'key': None,
         'ch' : "r",
@@ -173,7 +173,7 @@ class Demo3(GameState):
     })
 
     def setSliderInputs(slider):
-      slider.setInputs({
+      slider.setKeyInputs({
         'left' : {
           'key' : Keys.Left,
           'ch'  : None,

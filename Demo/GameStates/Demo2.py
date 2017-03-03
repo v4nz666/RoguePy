@@ -68,7 +68,7 @@ class Demo2(GameState):
     self.invFrame = self.view.addElement(invFrame)
   
   def _setupInputs(self):
-    self.view.setInputs({
+    self.view.setKeyInputs({
       'quit': {
         'key': Keys.Escape,
         'ch' : None,
@@ -86,7 +86,7 @@ class Demo2(GameState):
       }
     })
     
-    self.list.setInputs({
+    self.list.setKeyInputs({
       'scrollUp': {
         'key': Keys.Up,
         'ch' : None,

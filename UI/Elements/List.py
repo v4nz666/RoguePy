@@ -18,6 +18,7 @@ class List(Element):
     self._offset = 0
 
   def setItems(self, items):
+    self.clear()
     self._items = items
     self.setDirty()
 

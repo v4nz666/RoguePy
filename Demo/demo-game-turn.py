@@ -69,7 +69,7 @@ class MainState(RoguePy.GameState):
         self.view.addElement(map)
 
         # Inputs. =================================================================================
-        self.view.setInputs({
+        self.view.setKeyInputs({
             'quit' : {
                 'key' : Keys.Escape,
                 'ch'  : None,
@@ -77,7 +77,7 @@ class MainState(RoguePy.GameState):
             }
         })
 
-        # TODO: This must be called after setInputs on the element, or it will get blown away...
+        # TODO: This must be called after setKeyInputs on the element, or it will get blown away...
         map.setDirectionalInputHandler(movePlayer)
 
         # Miscellany. =============================================================================

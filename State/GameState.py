@@ -10,7 +10,7 @@ class GameState(object):
   def __init__(self, name, manager = None):
     self.name = name
     self.manager = manager
-    self.inputHandler = Input.KeyboardHandler()
+    self.inputHandler = Input.InputHandler()
 
     self.tickHandlers = {}
     self.handlerQueue = []
@@ -61,8 +61,9 @@ class GameState(object):
     self.handlerQueue = []
 
   def processInput(self):
-    inputs = self.view.getActiveInputs()
-    self.inputHandler.setInputs(inputs)
+    key, mouse = self.view.getActiveInputs()
+    self.inputHandler.setKeyInputs(key)
+    self.inputHandler.setMouseInputs(mouse)
     self.inputHandler.handleInput()
   
   def beforeLoad(self):

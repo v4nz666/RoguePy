@@ -64,7 +64,7 @@ class Demo4(GameState):
       .setItems(self.player.stats)
     
   def _setupInputs(self):
-    self.view.setInputs({
+    self.view.setKeyInputs({
       'quit': {
         'key': Keys.Escape,
         'ch': None,
@@ -77,7 +77,7 @@ class Demo4(GameState):
       }
     })
     
-    self.playerStatFrame.setInputs({
+    self.playerStatFrame.setKeyInputs({
       'attack': {
         'key':None,
         'ch': 'A',

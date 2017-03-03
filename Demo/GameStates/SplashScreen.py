@@ -44,7 +44,7 @@ class SplashScreen(GameState):
     self.endAnimation()
 
   def clearViewInputs(self):
-    self.view.setInputs({})
+    self.view.setKeyInputs({})
 
   def _setupView(self):
     self.elements = {}
@@ -71,7 +71,7 @@ class SplashScreen(GameState):
 
   def _setupInputs(self):
 
-    self.view.setInputs({
+    self.view.setKeyInputs({
       'skip': {
         'key': 'any',
         'ch': None,
@@ -79,7 +79,7 @@ class SplashScreen(GameState):
       }
     })
 
-    self.elements['pressKey'].setInputs({
+    self.elements['pressKey'].setKeyInputs({
       'quit': {
         'key':Keys.Escape,
         'ch': None,

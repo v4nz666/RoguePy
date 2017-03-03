@@ -25,7 +25,12 @@ class Element(View):
     self.clear()
 
     self._elements = []
-    self._inputs = {}
+    self._keyBoardInputs = {}
+    self._mouseInputs = {
+      'rClick': None,
+      'lClick': None
+    }
+
 
     self.fgOpacity = 1
     self.bgOpacity = 1

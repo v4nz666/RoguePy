@@ -11,3 +11,4 @@ from Bar import Bar
 from Slider import Slider
 from Map import Map
 from MessageScroller import MessageScroller
+from Dial import Dial

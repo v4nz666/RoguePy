@@ -108,7 +108,7 @@ class Demo5(GameState):
     self.cellItems = self.frame.addElement(Elements.List(32, 21, 14, 1)).setDefaultColors(Colors.gold)
 
   def _setupInputs(self):
-    self.view.setInputs({
+    self.view.setKeyInputs({
       'quit': {
         'key': Keys.Escape,
         'ch' : None,
@@ -120,7 +120,7 @@ class Demo5(GameState):
         'fn' : self.next
       },
     })
-    self.mapElement.setInputs({
+    self.mapElement.setKeyInputs({
       'selectionUp': {
         'key': Keys.Up,
         'ch' : None,
@@ -193,6 +193,6 @@ class Demo5(GameState):
       self.selectedX += 1
 
   def next(self):
-    self.manager.setNextState('demo1')
+    self.manager.setNextState('demo6')
   def quit(self):
     self.manager.setNextState('quit')
