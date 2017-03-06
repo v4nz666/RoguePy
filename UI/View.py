@@ -7,13 +7,12 @@ from RoguePy.libtcod import libtcod
 
 class View(object):
 
-  def __init__(self, ui):
-    self.ui = ui
+  def __init__(self, w, h, x=0, y=0 ):
 
-    self.x = 0
-    self.y = 0
-    self.width = ui.getWidth()
-    self.height = ui.getHeight()
+    self.width = w
+    self.height = h
+    self.x = x
+    self.y = y
 
     self.setDirty(True)
 
