@@ -125,17 +125,7 @@ class Demo3(GameState):
         'key': Keys.Tab,
         'ch' : None,
         'fn' : self.toggleModal
-      }
-    })
-    
-    self.modal.setKeyInputs({
-      'showModal': {
-        'key': Keys.Tab,
-        'ch' : None,
-        'fn' : self.toggleModal
-      }
-    })
-    
+      },
       'menuScrollUp': {
         'key' : Keys.Up,
         'ch'  : None,
@@ -150,6 +140,14 @@ class Demo3(GameState):
         'key' : Keys.Enter,
         'ch'  : None,
         'fn'  : self.menu.selectFn
+      }
+    })
+    
+    self.modal.setKeyInputs({
+      'showModal': {
+        'key': Keys.Tab,
+        'ch' : None,
+        'fn' : self.toggleModal
       }
     })
     
